@@ -15,6 +15,10 @@
     <link rel='stylesheet' href='/public/stylesheets/header.css' />
     <link rel='stylesheet' href='/public/stylesheets/footer.css' />
     <link rel='stylesheet' href='/public/stylesheets/category.css' />
+
+    <!-- Import JS file -->
+    <script src="/public/javascripts/default.js"></script>
+    <script src="/public/javascripts/category.js"></script>
   </head>
   <body>
     <% include header %>
@@ -47,7 +51,7 @@
               </div>
               <div class="categorical-news-items-title-col-number">
                 <span>Số cột</span>
-                <select name="" id="" >
+                <select name="" id="" data-prev='2'>
                   <option value="1">1</option>
                   <option value="2" selected>2</option>
                   <option value="4">4</option>
@@ -190,47 +194,7 @@
 
   <script>
 
-    // xử lý select
-    const sortSelect = document.querySelector('.categorical-news-items-title-sort-time select')
-    const colSelect = document.querySelector('.categorical-news-items-title-col-number select')
-    const newsSelect = document.querySelector('.categorical-news-items-title-news-number select')
-    const defaultHeight = 60
-    const defaultMargin = 12
-
-    sortSelect.addEventListener('change', function(){
-      console.log(this.value)
-
-      // chưa xử lý
-      // ... 
-    })
-
-    newsSelect.addEventListener('change', function(){
-      console.log(this.value)
-
-      // Chưa xử lý
-      // ...
-    })
-
-    colSelect.addEventListener('change', function(){
-      const numCol = +this.value
-      const newWidth = 100 / numCol
-      console.log("Thay đổi số cột: ", numCol) 
-      console.log("Kích thước cột mới: ", newWidth) 
-
-      const items = document.querySelectorAll('.categorical-news-item')
-      items.forEach(function(item, index) {
-        item.style.width = 'calc(' + newWidth + '% - 12px)'
-        item.style.marginBottom = (defaultMargin * 2 / numCol) + 'px'
-        const image = item.querySelector('img')
-        image.style.height = (defaultHeight * 2 / numCol) + 'px'
-        if(numCol === 4){
-          item.querySelector('p').style.display = 'none'
-        }
-        else{
-          item.querySelector('p').style.display = 'block'
-        }
-      })
-    })
+    
 
   </script>
 </html>

@@ -29,7 +29,11 @@
     font-weight: bold;
 }
 
-#contact-section input{
+.contact-email-input{
+    position: relative;
+}
+
+.contact-email-input input{
     margin-bottom: 20px;
     border: none;
     border-bottom: 1px var(--border-color) solid;
@@ -37,6 +41,12 @@
     text-align: center;
     width: 300px;
     outline: none;
+}
+
+.contact-email-input a{
+    position: absolute;
+    margin-top: 8px;
+    margin-left: -20px;
 }
 
 /*------------ Footer ------------*/

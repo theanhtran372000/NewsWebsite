@@ -10,7 +10,6 @@ header{
 }
 
 .logo {
-    flex: 2;
     display: flex;
     align-items: center;
 }
@@ -27,7 +26,6 @@ header{
 }
 
 .menu {
-    flex: 4;
     display: flex;
 }
 
@@ -52,8 +50,7 @@ header{
     display: none;
     position:absolute;
     background-color: white;
-    width: 150px;
-    right: -40px;
+    width: 200px;
     top: 20px;
     border-top: 3px solid var(--theme-color-2);
     box-shadow: var(--box-shadow);
@@ -73,7 +70,6 @@ header{
 }
 
 .others {
-    flex: 1;
     display: flex;
     justify-content: right;
 }
@@ -99,6 +95,10 @@ header{
     display: none;
 }
 
+.others > li:last-child i{
+    margin-right: 6px;
+}
+
 .others > li:first-child input {
     width: 100%;
     border: none;
@@ -108,5 +108,18 @@ header{
 
 .others > li:first-child a{
     position: absolute;
-    right: 10px;
+    right: 16px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .sub-menu{
+        transform: translateX(-15%);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .sub-menu{
+        transform: translateX(-45%);
+        top: 25px;
+    }
 }

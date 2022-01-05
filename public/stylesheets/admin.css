@@ -439,3 +439,73 @@
     color: var(--theme-color-2);
     text-align: justify;
 }
+
+/* Responsive 1200px */
+@media only screen and (max-width: 1200px) {
+    .container{
+        margin: 0 24px;
+    }
+}
+
+/* Responsive 800px */
+@media only screen and (max-width: 800px){
+    .admin-management-left {
+        margin-right: 0;
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .admin-management-info{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .admin-management-info h1{
+        width: 100%;
+        margin-bottom: 18px;
+    }
+
+    .admin-management-info-image{
+        width: 20%;
+    }
+
+    .admin-management-info-image img{
+        height: 200px;
+    }
+
+    .admin-management-info-content{
+        width: calc(80% - 24px);
+        margin-left: 24px;
+        padding-top: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .admin-management-info-content h1{
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+        padding-left: 12px;
+    }
+
+    .admin-management-info-content-detail{
+        flex-direction: column;
+        
+    }
+
+    .admin-management-info-content-detail-item{
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    .admin-management-info-content-detail-item p:first-child{
+        font-size: 16px;
+        padding-left: 12px;
+    }
+
+    .admin-management-info-content-detail-item p:last-child{
+        font-size: 16px;
+    }
+}
