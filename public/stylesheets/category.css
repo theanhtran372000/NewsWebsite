@@ -182,10 +182,12 @@
 
     .categorical-news-items-title-more span{
         font-size: 12px;
+        margin-right: 6px;
     }
     
     .categorical-news-items-title-more select{
         font-size: 12px;
+        height: 24px;
     }
 
     .categorical-news-items-title-sort-time select{
