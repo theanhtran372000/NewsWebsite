@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/public/images/favicon.ico">
+
+    <!-- Import CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel='stylesheet' href='/public/stylesheets/default.css' />
+    <link rel='stylesheet' href='/public/stylesheets/header.css' />
+    <link rel='stylesheet' href='/public/stylesheets/footer.css' />
+    <link rel='stylesheet' href='/public/stylesheets/admin.css' />
+  </head>
+  <body>
+    <% include header %>
+
+    <section class="admin-section">
+      <div class="container">
+        <div class="admin-management row">
+          <div class="admin-management-left">
+            <div class="admin-management-info">
+              <h1>Thông tin người dùng</h1>
+              <div class="admin-management-info-image">
+                <img src="/public/images/avatar.jpg" alt="Avatar">
+              </div>
+              <div class="admin-management-info-content">
+                <h1>Trần Thế Anh</h1>
+                <div class="admin-management-info-content-detail">
+                  <div class="admin-management-info-content-detail-item">
+                    <p>Tên đăng nhập</p>
+                    <p>thebeodepzai</p>
+                  </div>
+
+                  <div class="admin-management-info-content-detail-item">
+                    <p>Vai trò</p>
+                    <p>Admin</p>
+                  </div>
+                  
+                  <div class="admin-management-info-content-detail-item">
+                    <p>Ngày bắt đầu</p>
+                    <p>12/09/2021</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-management-web-info">
+              <h1>Thông tin trang web</h1>
+              <div class="admin-management-web-info-list-items row">
+                <div class="admin-management-web-info-item">
+                  <h1>591</h1>
+                  <p>Lượt truy cập</p>
+                </div>
+
+                <div class="admin-management-web-info-item">
+                  <h1>120</h1>
+                  <p>Người dùng</p>
+                </div>
+
+                <div class="admin-management-web-info-item">
+                  <h1>101</h1>
+                  <p>Bài báo</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-management-web-register">
+              <h1>Thêm tài khoản Admin</h1>
+              <div class="admin-management-web-register-info-box">
+                <div class="admin-management-web-register-info-item">
+                  <p>Họ và tên <span style="color: red;">*</span></p>
+                  <input type="text" placeholder="Họ và tên">
+                </div>
+
+                <div class="admin-management-web-register-info-item">
+                  <p>Tên đăng nhập <span style="color: red;">*</span></p>
+                  <input type="text" placeholder="Tên đăng nhập">
+                </div>
+                
+                <div class="admin-management-web-register-info-item">
+                  <p>Mật khẩu <span style="color: red;">*</span></p>
+                  <input type="text" placeholder="Nhập mật khẩu">
+                </div>
+
+                <div class="admin-management-web-register-info-item">
+                  <p>Nhập lại mật khẩu <span style="color: red;">*</span></p>
+                  <input type="text" placeholder="Nhập lại mật khẩu">
+                </div>
+
+                <div class="admin-management-web-register-info-item">
+                  <p>Ảnh đại diện <span style="color: red;">*</span></p>
+                  <input type="file" >
+                </div>
+              </div>
+              <div class="admin-management-web-register-button">
+                <button>Thêm admin</button>
+              </div>
+            </div>
+            
+          </div>
+          <div class="admin-management-right">
+            <div class="admin-management-right-add-section">
+              <h1>Đăng bài</h1>
+
+              <div class="admin-management-right-add-content">
+                <div class="admin-management-right-add-content-item">
+                  <p>Tiêu đề</p>
+                  <textarea placeholder="Tiêu đề bản tin"></textarea>
+                </div>
+                <div class="admin-management-right-add-content-item">
+                  <p>Nội dung</p>
+                  <textarea placeholder="Nội dung bản tin"></textarea>
+                </div>
+                <div class="admin-management-right-add-content-item">
+                  <p>Ảnh minh họa</p>
+                  <input type="file"> 
+                </div>
+              </div>
+
+              <div class="admin-management-right-add-button">
+                <button>Đăng bài</button>
+                <button>Làm mới</button>
+              </div>
+            </div>
+
+            <div class="admin-management-right-modify-section">
+              <h1>Danh sách bài báo đã đăng</h1>
+              <div class="admin-management-right-modify-list">
+                
+                <div class="admin-management-right-modify-news">
+                  <div class="admin-management-right-modify-header">
+                    <p>Tiêu đề của bài báo</p>
+                    <div class="admin-management-right-modify-option">
+                      <i class="fas fa-pen modify"></i>
+                      <i class="fas fa-trash delete"></i>
+                    </div>
+                  </div>
+                  <div class="admin-management-right-modify-body">
+                    <div class="admin-management-right-modify-body-image">
+                      <img src="/public/images/slide1.jpg" alt="">
+                      <p>Hình ảnh minh họa <span style="color: red;">*</span></p>
+                    </div>
+                    <div class="admin-management-right-modify-body-content">
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="admin-management-right-modify-news">
+                  <div class="admin-management-right-modify-header">
+                    <p>Tiêu đề của bài báo</p>
+                    <div class="admin-management-right-modify-option">
+                      <i class="fas fa-pen modify"></i>
+                      <i class="fas fa-trash delete"></i>
+                    </div>
+                  </div>
+                  <div class="admin-management-right-modify-body">
+                    <div class="admin-management-right-modify-body-image">
+                      <img src="/public/images/slide2.jpg" alt="">
+                      <p>Hình ảnh minh họa <span style="color: red;">*</span></p>
+                    </div>
+                    <div class="admin-management-right-modify-body-content">
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="admin-management-right-modify-news">
+                  <div class="admin-management-right-modify-header">
+                    <p>Tiêu đề của bài báo</p>
+                    <div class="admin-management-right-modify-option">
+                      <i class="fas fa-pen modify"></i>
+                      <i class="fas fa-trash delete"></i>
+                    </div>
+                  </div>
+                  <div class="admin-management-right-modify-body">
+                    <div class="admin-management-right-modify-body-image">
+                      <img src="/public/images/slide4.jpg" alt="">
+                      <p>Hình ảnh minh họa <span style="color: red;">*</span></p>
+                    </div>
+                    <div class="admin-management-right-modify-body-content">
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="admin-management-right-modify-news">
+                  <div class="admin-management-right-modify-header">
+                    <input type="text" value='Tiêu đề của bài báo'>
+                    <div class="admin-management-right-modify-option">
+                      <i class="fas fa-check confirm"></i>
+                      <i class="fas fa-times cancel"></i>
+                    </div>
+                  </div>
+                  <div class="admin-management-right-modify-body">
+                    <div class="admin-management-right-modify-body-image">
+                      <img src="/public/images/slide3.jpg" alt="">
+                      <input type="file">
+                    </div>
+                    <div class="admin-management-right-modify-body-content">
+                      <textarea>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <% include footer %>
+  </body>
+
+  <script>
+    // Auto-resize text area
+    const textAreas = document.querySelectorAll('textarea')
+    textAreas.forEach(function(ta, i){
+      ta.addEventListener('input', function(){
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 6 + 'px';
+      })
+    })
+
+    // xử lý sự kiện ấn nút chỉnh sửa
+    const modifyButtons = document.querySelectorAll('.modify')
+    modifyButtons.forEach(function(button, index){
+      button.addEventListener('dblclick', function(){
+        const oldTitle = this.parentNode.parentNode.parentNode.querySelector('.admin-management-right-modify-header > p').innerHTML
+        const oldContent = this.parentNode.parentNode.parentNode.querySelector('.admin-management-right-modify-body-content> p').innerHTML
+
+        this.parentNode.parentNode.parentNode.innerHTML = `
+        <div class="admin-management-right-modify-header">
+          <input type="text" value='${oldTitle}'>
+          <div class="admin-management-right-modify-option">
+            <i class="fas fa-check confirm"></i>
+            <i class="fas fa-times cancel"></i>
+          </div>
+        </div>
+        <div class="admin-management-right-modify-body">
+          <div class="admin-management-right-modify-body-image">
+            <img src="/public/images/slide3.jpg" alt="">
+            <input type="file">
+          </div>
+          <div class="admin-management-right-modify-body-content">
+            <textarea>${oldContent}</textarea>
+          </div>
+        </div>
+        `
+
+        // thêm lại sự kiện cho mục text area
+        const textArea = this.parentNode.parentNode.parentNode.querySelector('textarea')
+        textArea.addEventListener('input', function(){
+          this.style.height = 'auto';
+          this.style.height = this.scrollHeight + 6 + 'px';
+
+          // thêm sự kiện cho 2 button
+          const confirmButton = this.parentNode.parentNode.parentNode.querySelector('.confirm')
+          const cancelButton = this.parentNode.parentNode.parentNode.querySelector('.cancel')
+          // chưa thực hiện
+        })
+      })
+    })
+
+    // xử lý sự kiện ấn nút xóa
+    const deleteButtons = document.querySelectorAll('.delete')
+    deleteButtons.forEach(function(button, index){
+      button.addEventListener('dblclick', function(){
+        this.parentNode.parentNode.parentNode.style.display = 'none'
+
+      // xử lý phía cơ sở dữ liệu
+      })
+    })
+  </script>
+</html>

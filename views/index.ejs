@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+
+    <link rel="icon" href="/public/images/favicon.ico">
+    <link rel="stylesheet" href="/public/stylesheets/default.css">
+    <link rel="stylesheet" href="/public/stylesheets/index.css">
+
+</head>
+<body>
+    <section class="login-section">
+        <div class="login-content row container">
+            <div class="login-content-left">
+                <div class="login-content-left-title row">
+                    <div class="login-content-left-title-login login-title-chose">
+                        <p>Đăng nhập</p>
+                    </div>
+                    <div class="login-content-left-title-register">
+                        <p>Đăng ký</p>
+                    </div>
+                </div>
+                <div class="login-content-left-body">
+                    <div class="login-content-left-body-login">
+                        <div class="login-content-left-body-input">
+                            <p>Tên đăng nhập</p>
+                            <input type="text" placeholder="Tên đăng nhập của bạn">
+                        </div>
+                        <div class="login-content-left-body-input">
+                            <p>Mật khẩu</p>
+                            <input type="password" placeholder="Mật khẩu của bạn">
+                        </div>
+                        <div class="login-content-left-body-checkbox">
+                            <input type="checkbox">
+                            <p>Bạn là admin?</p>
+                        </div>
+                        <div class="login-content-left-body-confirm row">
+                            <button>Đăng nhập</button>
+                            <button><a href="/home">Tôi là khách</a></button>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="login-content-left-body-register">
+                        <div class="login-content-left-body-input">
+                            <p>Tên đăng nhập</p>
+                            <input type="text" placeholder="Tên đăng nhập của bạn">
+                        </div>
+                        <div class="login-content-left-body-input">
+                            <p>Mật khẩu</p>
+                            <input type="password" placeholder="Nhập mật khẩu">
+                        </div>
+                        <div class="login-content-left-body-input">
+                            <p>Nhập lại mật khẩu</p>
+                            <input type="password" placeholder="Nhập lại mật khẩu">
+                        </div>
+                        <div class="login-content-left-body-checkbox">
+                            <input type="checkbox">
+                            <p>Đồng ý với điều khoản</p>
+                        </div>
+                        <div class="login-content-left-body-confirm row">
+                            <button>Đăng ký</button>
+                            <button><a href="/home">Tôi là khách</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="login-content-right">
+                <div class="login-content-right-title-box">
+                    <h1>Lazy News</h1>
+                    <p>Trang web tin tức hàng đầu thế giới</p>
+                </div>
+                
+                <img src="/public/images/pic2.png" alt="">
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+    const loginTitle = document.querySelector('.login-content-left-title-login')
+    const registerTitle = document.querySelector('.login-content-left-title-register')
+    const loginBody = document.querySelector('.login-content-left-body-login')
+    const registerBody = document.querySelector('.login-content-left-body-register')
+
+    loginTitle.addEventListener('click', function(){
+        loginBody.style.display = 'block'
+        registerBody.style.display = 'none'
+        loginTitle.classList.add('login-title-chose')
+        registerTitle.classList.remove('login-title-chose')
+    })
+
+    registerTitle.addEventListener('click', function(){
+        loginBody.style.display = 'none'
+        registerBody.style.display = 'block'
+        loginTitle.classList.remove('login-title-chose')
+        registerTitle.classList.add('login-title-chose')
+    })
+</script>
+
+</html>

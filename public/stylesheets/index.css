@@ -1,0 +1,179 @@
+.login-section{
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    border: 50px solid #333;
+}
+
+.login-content{
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Định dạng form bên trái */
+
+.login-content-left{
+    flex: 2;
+    width: 100%;
+    height: 70%;
+    border: 2px solid #ddd;
+    box-shadow: 1px 1px 5px #ddd;
+    border-radius: 6px;
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f0f2f5;
+}
+
+.login-content-left-title{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.login-content-left-title div{
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-content-left-title div:first-child{
+    border-radius: 6px 0 0 0;
+}
+
+.login-content-left-title div:last-child{
+    border-radius: 0 6px 0 0;
+}
+
+.login-content-left-title > div > p{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px 0;
+    color: #ddd;
+}
+
+.login-title-chose{
+    background-color: #333;
+}
+
+.login-title-chose p{
+    color: white;
+}
+
+.login-content-left-body{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 8;
+}
+
+.login-content-left-body > div{
+    width: 70%;
+}
+
+.login-content-left-body-input p{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.login-content-left-body-input{
+    margin-bottom: 24px;
+}
+
+.login-content-left-body-input input{
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    outline: none;
+}
+
+.login-content-left-body-checkbox{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.login-content-left-body-checkbox p{
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.login-content-left-body-checkbox input {
+    width: 20px;
+    height: 20px;
+    border: none;
+}
+
+.login-content-left-body-confirm{
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-content-left-body-confirm button {
+    font-size: 16px;
+    height: 40px;
+    width: 200px;
+    border: 2px solid black;
+    background-color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-content-left-body-confirm button:first-child:hover{
+    background-color: #333;
+    color: white;
+}
+
+.login-content-left-body-confirm button:not(:last-child){
+    margin-right: 20px;
+}
+
+
+/* Định dạng bên phải */
+
+.login-content-right{
+    height: 70%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login-content-right img{
+    width: 100%;
+    border-radius: 12px;
+}
+
+.login-content-right-title-box{
+    padding: 50px 20px 60px 20px;
+    border-radius: 12px;
+    background-color: #333;
+}
+
+.login-content-right-title-box h1{
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.login-content-right-title-box p{
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}

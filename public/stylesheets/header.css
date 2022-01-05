@@ -1,0 +1,112 @@
+/* HEADER */
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px;
+    height: 70px;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    background-color: white;
+}
+
+.logo {
+    flex: 2;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.web-name{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: lighter;
+    text-transform: capitalize;
+}
+
+.menu {
+    flex: 4;
+    display: flex;
+}
+
+.menu > li {
+    text-transform: uppercase;
+    padding: 0 5px;
+    position: relative;
+}
+
+.menu > li > a{
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    line-height: 20px;
+}
+
+.menu > li:hover .sub-menu{
+    display: block;
+}
+
+.sub-menu{
+    display: none;
+    position:absolute;
+    background-color: white;
+    width: 150px;
+    right: -40px;
+    top: 20px;
+    border-top: 3px solid var(--theme-color-2);
+    box-shadow: var(--box-shadow);
+    padding: 10px 0px 10px 20px;
+    z-index: 10;
+}
+
+.sub-menu > li{
+    padding: 5px;
+}
+
+.sub-menu > li > a{
+    font-weight: normal;
+    word-spacing: 1px;
+    text-transform: none;
+    line-height: 15px;
+}
+
+.others {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+}
+
+.others > li{
+    padding: 0 12px;
+    position: relative;
+}
+
+.others > li::after{
+    content: "";
+    display: block;
+    width: 1px;
+    height: 80%;
+    background-color: #ccc;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.others > li:last-child::after{
+    display: none;
+}
+
+.others > li:first-child input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--theme-color-2);
+    outline: none;
+}
+
+.others > li:first-child a{
+    position: absolute;
+    right: 10px;
+}
