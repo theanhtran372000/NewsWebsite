@@ -15,10 +15,15 @@ router.get('/home', function(req, res) {
   
   // Dữ liệu người dùng
   const username = 'Khách'
+
+  // Tạo kết nối db
   const conn = database.createConnection()
-  conn.query('SELECT * from chude', (err, rows) => {
+
+  // Lấy dữ liệu header ---------> anh em thêm truy vấn vào sau dấu ; nhé
+  conn.query('SELECT * from chude; SELECT * from chude', (err, results) => {
     if(err) throw err
-    
+
+    rows = results[0]
     const arr = []
     rows.forEach(function(item){
       arr.push(item.tenchude)
@@ -29,6 +34,7 @@ router.get('/home', function(req, res) {
       listTopic: arr
     });
   })
+  
 });
 
 router.get('/category', function(req, res) {
