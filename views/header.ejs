@@ -7,22 +7,22 @@
     <div class="menu">
         <% if(listTopic.length < 9) {
             for(let i = 0; i < listTopic.length; i++){ %>
-                <li><a href="#" class="topic"><%= listTopic[i] %></a></li>
+                <li><a href="<%= `/user/${userid}/category/${listTopic[i].chudeid}` %>" data-id='<%= listTopic[i].chudeid %>' class="topic"><%= listTopic[i].tenchude %></a></li>
         <% }
         } else {
             for(let i = 0; i < 8; i++) { %>
-                <li><a href="#" class="topic"><%= listTopic[i] %></a></li>
+                <li><a href="<%= `/user/${userid}/category/${listTopic[i].chudeid}` %>" data-id='<%= listTopic[i].chudeid %>' class="topic"><%= listTopic[i].tenchude %></a></li>
             <% } %>
-            <li><a href="">Thêm <i class="fas fa-caret-down"></i></a>
+            <li><a href="#">Thêm <i class="fas fa-caret-down"></i></a>
                 <ul class="sub-menu">
                     <% for(let i = 8; i < listTopic.length; i++) { %>
-                        <li><a href="#" class="topic"><%= listTopic[i] %></a></li>
+                        <li><a href="<%= `/user/${userid}/category/${listTopic[i].chudeid}` %>" data-id='<%= listTopic[i].chudeid %>' class="topic"><%= listTopic[i].tenchude %></a></li>
                     <% }
         } %>
     </div>
 
     <div class="others">
-        <li><input type="text" placeholder="Tìm kiếm"> <a href="#" class="fas fa-search"></a></li>
+        <li><input type="text" placeholder="Tìm kiếm"> <a onclick="searchNews()" class="fas fa-search"></a></li>
         <li><a href="#contact-section" class="fas fa-phone"></a></li>
         <li><a href="/"><i class="fas fa-user"></i> <%= username %></a></li>
     </div>

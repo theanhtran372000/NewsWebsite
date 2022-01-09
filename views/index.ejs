@@ -30,41 +30,48 @@
                     <div class="login-content-left-body-login">
                         <div class="login-content-left-body-input">
                             <p>Tên đăng nhập</p>
-                            <input type="text" placeholder="Tên đăng nhập của bạn">
+                            <input class="login-username" type="text" placeholder="Tên đăng nhập của bạn">
                         </div>
                         <div class="login-content-left-body-input">
                             <p>Mật khẩu</p>
-                            <input type="password" placeholder="Mật khẩu của bạn">
+                            <input class="login-password" type="password" placeholder="Mật khẩu của bạn">
                         </div>
+
+                        <p class="login-announcement" style="color: red; font-size: 14px; margin-bottom: 12px;">Bạn cần nhập username và password để đăng nhập!</p>
+
                         <div class="login-content-left-body-checkbox">
-                            <input type="checkbox">
+                            <input class="login-admin" type="checkbox">
                             <p>Bạn là admin?</p>
                         </div>
+
                         <div class="login-content-left-body-confirm row">
-                            <button>Đăng nhập</button>
-                            <button><a href="/home">Tôi là khách</a></button>
+                            <button onclick="login()">Đăng nhập</button>
+                            <button><a href="/user/1/home">Tôi là khách</a></button>
                         </div>
                     </div>
                     <div style="display: none;" class="login-content-left-body-register">
                         <div class="login-content-left-body-input">
                             <p>Tên đăng nhập</p>
-                            <input type="text" placeholder="Tên đăng nhập của bạn">
+                            <input class="register-username" type="text" placeholder="Tên đăng nhập của bạn">
                         </div>
                         <div class="login-content-left-body-input">
                             <p>Mật khẩu</p>
-                            <input type="password" placeholder="Nhập mật khẩu">
+                            <input class="register-password-1" type="password" placeholder="Nhập mật khẩu">
                         </div>
                         <div class="login-content-left-body-input">
                             <p>Nhập lại mật khẩu</p>
-                            <input type="password" placeholder="Nhập lại mật khẩu">
+                            <input class="register-password-2" type="password" placeholder="Nhập lại mật khẩu">
                         </div>
+
+                        <p class="register-announcement" style="color: red; font-size: 14px; margin-bottom: 12px;">Bạn cần nhập thông tin để đăng ký để đăng ký!</p>
+
                         <div class="login-content-left-body-checkbox">
-                            <input type="checkbox">
+                            <input class="register-accept" type="checkbox">
                             <p>Đồng ý với điều khoản</p>
                         </div>
                         <div class="login-content-left-body-confirm row">
-                            <button>Đăng ký</button>
-                            <button><a href="/home">Tôi là khách</a></button>
+                            <button onclick="register()">Đăng ký</button>
+                            <button><a href="/user/1/home">Tôi là khách</a></button>
                         </div>
                     </div>
                 </div>
@@ -82,24 +89,7 @@
 </body>
 
 <script>
-    const loginTitle = document.querySelector('.login-content-left-title-login')
-    const registerTitle = document.querySelector('.login-content-left-title-register')
-    const loginBody = document.querySelector('.login-content-left-body-login')
-    const registerBody = document.querySelector('.login-content-left-body-register')
 
-    loginTitle.addEventListener('click', function(){
-        loginBody.style.display = 'block'
-        registerBody.style.display = 'none'
-        loginTitle.classList.add('login-title-chose')
-        registerTitle.classList.remove('login-title-chose')
-    })
-
-    registerTitle.addEventListener('click', function(){
-        loginBody.style.display = 'none'
-        registerBody.style.display = 'block'
-        loginTitle.classList.remove('login-title-chose')
-        registerTitle.classList.add('login-title-chose')
-    })
 </script>
 
 </html>

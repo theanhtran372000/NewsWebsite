@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả tìm kiếm</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/public/images/favicon.ico">
+
+    <!-- Import CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel='stylesheet' href='/public/stylesheets/default.css' />
+    <link rel='stylesheet' href='/public/stylesheets/header.css' />
+    <link rel='stylesheet' href='/public/stylesheets/footer.css' />
+    <link rel='stylesheet' href='/public/stylesheets/search.css' />
+
+    <!-- Import JS file -->
+    <script src="/public/javascripts/default.js"></script>
+    <script src="/public/javascripts/search.js"></script>
+  </head>
+  <body>
+    <% include header %>
+
+    <section class="categorical-news-section">
+      <div class="container">
+        <h1>
+          Từ khóa <span class="key-word" style="color: deepskyblue;"><%= searchString %></span> - <span class="num-result"><%= numNews %></span> kết quả
+        </h1>
+        <div class="categorical-news">
+          <!-- Một block tin bao gồm 1 title và nhiều tin -->
+          <div class="categorical-news-items-title">
+            <h1>Danh sách tin tức</h1>
+            <div class="categorical-news-items-title-more row">
+              <div class="categorical-news-items-title-sort-time">
+                <span>Sắp xếp</span>
+                <select name="" id="">
+                  <option value="latest" selected>Xem tin gần nhất</option>
+                  <option value="oldest">Xem tin xa nhất</option>
+                  <option value="random">Xem ngẫu nhiên</option>
+                </select>
+              </div>
+              <div class="categorical-news-items-title-news-number">
+                <span>Số tin</span>
+                <select name="" id="">
+                  <option value="8">8</option>
+                  <option value="20" selected>20</option>
+                  <option value="40">40</option>
+                </select>
+              </div>
+              <div class="categorical-news-items-title-col-number">
+                <span>Số cột</span>
+                <select name="" id="" data-prev='2'>
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="categorical-news-items">
+            <% listNews.forEach(function(news){ %>
+              <div class="categorical-news-item">
+                <div class="categorical-news-item-image">
+                  <img src="<%= news.anh %>" alt="">
+                </div>
+                <div class="categorical-news-item-content">
+                  <% const path = `/user/${userid}/news/${news.id}` %>
+                  <a href="<%= path %>"><h2><%= news.tieude %></h2></a>
+                  <p><%= news.noidung.split(' ').splice(0, 30).join(' ') + ((news.noidung.split(' ').length  > 30)? ' ...': '') %></p>
+                </div>
+              </div>
+            <% }) %>
+
+            <!-- <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide1.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+            
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div>
+
+            <div class="categorical-news-item">
+              <div class="categorical-news-item-image">
+                <img src="/public/images/slide2.jpg" alt="">
+              </div>
+              <div class="categorical-news-item-content">
+                <h2>Tiêu đề bản tin</h2>
+                <p>Nội dung bản tin: ... </p>
+              </div>
+            </div> -->
+
+          </div>
+          <div class="categorical-news-items-bottom">
+            <p>
+              <i onclick="prevPage()" class="fas fa-angle-double-left prev-button"></i> 1 <span class="current-page">2</span> 3 4 5 6 7 <i onclick="nextPage()" class="fas fa-angle-double-right next-button"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <% include footer %>
+  </body>
+
+  <script>
+  </script>
+</html>

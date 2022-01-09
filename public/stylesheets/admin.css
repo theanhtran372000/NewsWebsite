@@ -246,6 +246,34 @@
     outline: none;
 }
 
+.admin-management-right-add-content-item select{
+    flex: 2;
+    height: auto;
+    padding: 6px 12px;
+    border: 2px var(--border-color) solid;
+    font-size: 14px;
+    overflow: hidden;
+    outline: none;
+    margin-left: 10px;
+    color: var(--theme-color-2);
+}
+
+.admin-management-right-add-content-item select option{
+    color: var(--theme-color-2);
+}
+
+
+.admin-management-right-add-content-item input{
+    flex: 2;
+    height: auto;
+    padding: 6px 12px;
+    border: 2px var(--border-color) solid;
+    font-size: 14px;
+    overflow: hidden;
+    outline: none;
+    margin-left: 12px;
+}
+
 .admin-management-right-add-content-item:last-child{
     align-items: center;
 }
@@ -257,6 +285,7 @@
     height: 36px;
     font-size: 12px;
     border: 2px solid var(--border-color);
+    margin-left: 0px;
 }
 
 .admin-management-right-add-content-item input[type='file']::file-selector-button{

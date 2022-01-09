@@ -18,6 +18,7 @@
 
     <!-- Import JS file -->
     <script src="/public/javascripts/default.js"></script>
+    <script src="/public/javascripts/home.js"></script>
   </head>
   <body>
     <% include header %>
@@ -27,6 +28,18 @@
         <h1>Tin tức mới nhất</h1>
         <div class="latest-news">
           <div class="latest-news-big-image">
+            <img src="<%=latestNews[0].anh %>" alt="Ảnh to">
+          </div>
+          <div class="latest-news-small-images">
+          <% for(let i = 1; i < latestNews.length; i++) { %>
+            <div class="latest-news-small-image">
+              <img src="<%= latestNews[i].anh %>" alt="Ảnh nhỏ">
+            </div>
+
+          <% } %>
+          </div>
+
+          <!-- <div class="latest-news-big-image">
             <img src="/public/images/slide1.jpg" alt="">
           </div>
           <div class="latest-news-small-images">
@@ -42,18 +55,22 @@
             <div class="latest-news-small-image">
               <img src="/public/images/slide5.jpg" alt="">
             </div>
-          </div>
+          </div> -->
+
           <div class="latest-news-content">
             <div class="latest-news-content-box">
               <h1>
-                Tiêu đề bản tin hiện tại
+                <%= latestNews[0].tieude %>
               </h1>
-              <p>
+              <%  const content = latestNews[0].noidung %>
+              <p><%= content %></p>
+
+              <!-- <p>
                 Nội dung bản tin hiện tại: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed tellus sagittis, elementum orci a, convallis dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque tristique felis nisi, quis convallis nisi pulvinar vehicula. Nam id vehicula ligula. Vivamus ut venenatis risus. Vivamus neque ex, pulvinar ut augue eget, dignissim ultrices tortor. Donec dictum nisl et semper eleifend. Pellentesque eleifend porttitor tellus quis accumsan. Aliquam blandit tincidunt ligula vel hendrerit. Maecenas elementum dolor egestas, semper nisi in, hendrerit mi. Duis a dui lorem. Maecenas a sem interdum, rhoncus ante id, consequat mauris. Ut aliquam ipsum lectus, sit amet eleifend nunc venenatis ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-              </p>
+              </p> -->
             </div>
             <div class="latest-news-content-more">
-              <a href="">Xem thêm <i class="fas fa-angle-double-right"></i></a>
+              <a href="<%= `/user/${userid}/news/${latestNews[0].id}` %>">Xem thêm <i class="fas fa-angle-double-right"></i></a>
             </div>
           </div>
         </div>    
@@ -68,7 +85,32 @@
         <div class="categorical-news">
 
           <!-- Một block tin bao gồm 1 title và nhiều tin -->
-          <div class="categorical-news-items-title">
+          <%  const topicList = availableTopics
+              const previewLength = 35 // lấy 35 từ đầu tiên trong bản tin làm preview
+              topicList.forEach(function(topic){ %>
+                <!-- Tiêu đề -->
+                <div class="categorical-news-items-title">
+                  <h1><%= topic.tenchude %></h1>
+                  <!-- Đổi đường dẫn chủ đề ở đây -->
+                  <a href="<%= `/user/${userid}/category/${topic.chudeid}` %>">Xem thêm <i class="fas fa-angle-double-right"></i></a>
+                </div>
+                <div class="categorical-news-items">
+                <% categoricalNews[topic['tenchude']].forEach(function(news){ %>
+                  <div class="categorical-news-item">
+                    <div class="categorical-news-item-image">
+                      <img src="<%= news.anh %>" alt="">
+                    </div>
+                    <div class="categorical-news-item-content">
+                      <!-- Đổi link bài viết ở đây -->
+                      <a href="<%= `/user/${userid}/news/${news.id}` %>"><h2><%= news.tieude %></h2></a> 
+                      <p> <%= news.noidung.split(' ').splice(0, previewLength).join(" ") + "..." %> </p>
+                    </div>
+                  </div>
+                  <% }) %>
+                </div>
+              <% })  %>
+
+          <!-- <div class="categorical-news-items-title">
             <h1>Tin thế giới</h1>
             <a href="#">Xem thêm <i class="fas fa-angle-double-right"></i></a>
           </div>
@@ -92,29 +134,8 @@
                 <p>Nội dung bản tin: ... </p>
               </div>
             </div>
-            
-            <div class="categorical-news-item">
-              <div class="categorical-news-item-image">
-                <img src="/public/images/slide2.jpg" alt="">
-              </div>
-              <div class="categorical-news-item-content">
-                <h2>Tiêu đề bản tin</h2>
-                <p>Nội dung bản tin: ... </p>
-              </div>
-            </div>
-
-            <div class="categorical-news-item">
-              <div class="categorical-news-item-image">
-                <img src="/public/images/slide2.jpg" alt="">
-              </div>
-              <div class="categorical-news-item-content">
-                <h2>Tiêu đề bản tin</h2>
-                <p>Nội dung bản tin: ... </p>
-              </div>
-            </div>
           </div>
 
-          <!-- Block tin kinh tế -->
           <div class="categorical-news-items-title">
             <h1>Tin kinh tế</h1>
             <a href="#">Xem thêm <i class="fas fa-angle-double-right"></i></a>
@@ -139,47 +160,9 @@
                 <p>Nội dung bản tin: ... </p>
               </div>
             </div>
+          </div> -->
 
-            <div class="categorical-news-item">
-              <div class="categorical-news-item-image">
-                <img src="/public/images/slide3.jpg" alt="">
-              </div>
-              <div class="categorical-news-item-content">
-                <h2>Tiêu đề bản tin</h2>
-                <p>Nội dung bản tin: ... </p>
-              </div>
-            </div>
-
-            <div class="categorical-news-item">
-              <div class="categorical-news-item-image">
-                <img src="/public/images/slide4.jpg" alt="">
-              </div>
-              <div class="categorical-news-item-content">
-                <h2>Tiêu đề bản tin</h2>
-                <p>Nội dung bản tin: ... </p>
-              </div>
-            </div>
-
-            <div class="categorical-news-item">
-              <div class="categorical-news-item-image">
-                <img src="/public/images/slide3.jpg" alt="">
-              </div>
-              <div class="categorical-news-item-content">
-                <h2>Tiêu đề bản tin</h2>
-                <p>Nội dung bản tin: ... </p>
-              </div>
-            </div>
-
-            <div class="categorical-news-item">
-              <div class="categorical-news-item-image">
-                <img src="/public/images/slide4.jpg" alt="">
-              </div>
-              <div class="categorical-news-item-content">
-                <h2>Tiêu đề bản tin</h2>
-                <p>Nội dung bản tin: ... </p>
-              </div>
-            </div>
-          </div>
+           
         </div>
       </div>
     </section>
@@ -189,21 +172,5 @@
 
   <script>
 
-    /* ------  Hiệu ứng chuyển ảnh khi click trên ảnh nhỏ ----- */
-    const bigImage = document.querySelector('.latest-news-big-image img')
-    const smallImages = document.querySelectorAll('.latest-news-small-image img')
-
-    
-    smallImages.forEach(function(smallImage, index){
-      smallImage.addEventListener('click', function(){
-        // cập nhật ảnh
-        var oldSrc = bigImage.src
-        bigImage.src = smallImage.src
-        smallImage.src = oldSrc
-
-        // cập nhật nội dung
-        // chưa viết
-      })
-    })
   </script>
 </html>
