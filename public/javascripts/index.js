@@ -32,7 +32,9 @@ function login(){
 
     // Đăng nhập dưới quyền admin
     if(admin){
-        // chưa làm
+        // phần đăng nhập admin lộc làm 
+        console.log("admin")
+        sendPostRequestAdmin(username, password)
     }
     // Đăng nhập dưới quyền user
     else{
@@ -60,6 +62,27 @@ function sendLoginRequest(username, password){
     }
 
     xhttp.open("POST",  `/user/login`, true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(`username=${username}&password=${password}`)
+}
+// Hàm gửi POST request bằng AJAX vs đăng nhập bằng admin
+function sendPostRequestAdmin(username, password){
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function(){
+        if(this.readyState === 4 && this.status === 200){
+            const res = JSON.parse(this.responseText)
+            // đăng nhập thành công
+            console.log(res)
+            if(res['status'] == 'Success'){
+                console.log("success")
+                const adminid = res['adminid']
+                window.location = `admin/${adminid}/home`
+            }else{
+                document.querySelector('.login-announcement').innerHTML = res['message']
+            }
+        }
+    }
+    xhttp.open("POST", `/admin/login`, true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(`username=${username}&password=${password}`)
 }

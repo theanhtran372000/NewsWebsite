@@ -17,11 +17,11 @@
     <link rel='stylesheet' href='/public/stylesheets/admin.css' />
 
     <!-- Import JS file -->
-    <script src="/public/javascripts/default.js"></script>
+    <!-- <script src="/public/javascripts/default.js"></script> -->
     <script src="/public/javascripts/admin.js"></script>
   </head>
   <body>
-    <% include header %>
+    <% include header_admin %>
 
     <section class="admin-section">
       <div class="container">
@@ -30,14 +30,14 @@
             <div class="admin-management-info">
               <h1>Thông tin người dùng</h1>
               <div class="admin-management-info-image">
-                <img src="/public/images/avatar.jpg" alt="Avatar">
+                <img src='<%= admin.avatar %>' alt="Avatar">
               </div>
               <div class="admin-management-info-content">
-                <h1>Trần Thế Anh</h1>
+                <h1><%= admin.hoten %></h1>
                 <div class="admin-management-info-content-detail">
                   <div class="admin-management-info-content-detail-item">
                     <p>Tên đăng nhập</p>
-                    <p>thebeodepzai</p>
+                    <p><%= admin.username %></p>
                   </div>
 
                   <div class="admin-management-info-content-detail-item">
@@ -47,7 +47,7 @@
                   
                   <div class="admin-management-info-content-detail-item">
                     <p>Ngày bắt đầu</p>
-                    <p>12/09/2021</p>
+                    <p><%= admin.ngaybatdau %></p>
                   </div>
                 </div>
               </div>
@@ -62,12 +62,12 @@
                 </div>
 
                 <div class="admin-management-web-info-item">
-                  <h1>120</h1>
+                  <h1><%= countUser %></h1>
                   <p>Người dùng</p>
                 </div>
 
                 <div class="admin-management-web-info-item">
-                  <h1>101</h1>
+                  <h1><%=countNews%></h1>
                   <p>Bài báo</p>
                 </div>
               </div>
@@ -78,31 +78,32 @@
               <div class="admin-management-web-register-info-box">
                 <div class="admin-management-web-register-info-item">
                   <p>Họ và tên <span style="color: red;">*</span></p>
-                  <input type="text" placeholder="Họ và tên">
+                  <input type="text" placeholder="Họ và tên" id="hotenadminnew" required>
                 </div>
 
                 <div class="admin-management-web-register-info-item">
                   <p>Tên đăng nhập <span style="color: red;">*</span></p>
-                  <input type="text" placeholder="Tên đăng nhập">
+                  <input type="text" placeholder="Tên đăng nhập" id="usernameadminnew" required>
                 </div>
                 
                 <div class="admin-management-web-register-info-item">
                   <p>Mật khẩu <span style="color: red;">*</span></p>
-                  <input type="text" placeholder="Nhập mật khẩu">
+                  <input type="text" placeholder="Nhập mật khẩu" id="passwordadminnew" required>
                 </div>
 
                 <div class="admin-management-web-register-info-item">
                   <p>Nhập lại mật khẩu <span style="color: red;">*</span></p>
-                  <input type="text" placeholder="Nhập lại mật khẩu">
+                  <input type="text" placeholder="Nhập lại mật khẩu" id="repasswordadminnew" required>
                 </div>
 
                 <div class="admin-management-web-register-info-item">
                   <p>Ảnh đại diện <span style="color: red;">*</span></p>
-                  <input type="file" >
+                  <input type="file" id="avataradminnew" accept="image/png, image/jpeg" required>
                 </div>
               </div>
+              <p id="post-announcement-admin" style="color: red; font-size: 14px; margin-bottom: 12px; display: none; ">Bạn đã thêm thành công</p>
               <div class="admin-management-web-register-button">
-                <button>Thêm admin</button>
+                <button id="button-addadmin" >Thêm admin</button>
               </div>
             </div>
             
@@ -114,39 +115,73 @@
               <div class="admin-management-right-add-content">
                 <div class="admin-management-right-add-content-item">
                   <p>Tiêu đề</p>
-                  <textarea placeholder="Tiêu đề bản tin"></textarea>
+                  <textarea placeholder="Tiêu đề bản tin" id="title-news" ></textarea>
                 </div>
+                <!-- <div class="admin-management-right-add-content-item">
+                  <p>Thể loại</p>
+                  <select name="category" id="category-add-item">
+                    <% listTopics.forEach(topic =>{ %>
+                       <option value='<%=topic.id %>' ><%= topic.tenchude %></option>  
+                    <% }) %>
+                  </select>
+                </div> -->
+                
                 <div class="admin-management-right-add-content-item">
                   <p>Nội dung</p>
-                  <textarea placeholder="Nội dung bản tin"></textarea>
+                  <textarea placeholder="Nội dung" id="content-news" ></textarea>
                 </div>
                 <div class="admin-management-right-add-content-item">
                   <p>Chủ đề</p>
-                  <select name="" id="">
-                    <option value="">Thế giới</option>
-                    <option value="">Đời sống</option>
-                    <option value="">Pháp luật</option>
-                    <option value="">Chủ đề mới</option>
+                  <select name="category" id="category-add-item">
+                    <% listTopics.forEach(topic =>{ %>
+                      <option value='<%=topic.id %>' ><%= topic.tenchude %></option>  
+                   <% }) %>
                   </select>
-                  <input placeholder="Tên chủ đề mới">
+                  <input placeholder="Tên chủ đề mới" id="category-news-new" >
+            	  </div>
+                <div class="admin-management-right-add-content-item">
+                  <p>Nguồn</p>
+                  <textarea placeholder="nguồn" id="nguon-news" ></textarea>
                 </div>
                 <div class="admin-management-right-add-content-item">
                   <p>Ảnh minh họa</p>
-                  <input type="file"> 
+                  <input type="file" id="image-news" accept="image/png, image/jpeg" > 
                 </div>
               </div>
-
+              <p id="post-announcement-news" style="color: red; font-size: 14px; margin-bottom: 12px; display: none; ">Bạn đã thêm thành công</p>
               <div class="admin-management-right-add-button">
-                <button>Đăng bài</button>
-                <button>Làm mới</button>
+                <button id="button-add-news" >Đăng bài</button>
+                <button id="button-reset" >Làm mới</button>
               </div>
             </div>
 
-            <div class="admin-management-right-modify-section">
+            <div class="admin-management-right-modify-section" >
               <h1>Danh sách bài báo đã đăng</h1>
               <div class="admin-management-right-modify-list">
+                <% news.forEach(element => { %>
+                  <div class="admin-management-right-modify-news">
+                    <p style="display: none;" ><%= element.id %></p>
+                    <div class="admin-management-right-modify-header">
+                      <p><%= element.tieude %></p>
+                      <div class="admin-management-right-modify-option">
+                        <i class="fas fa-pen modify" ondblclick="modifyNews(this)" ></i>
+                        <i class="fas fa-trash delete" ondblclick="deleteNews(this)" ></i>
+                      </div>
+                    </div>
+                    <div class="admin-management-right-modify-body">
+                      <div class="admin-management-right-modify-body-image">
+                        <img src='<%=element.anh%>' alt="">
+                        <p>Hình ảnh minh họa <span style="color: red;">*</span></p>
+                      </div>
+                      <div class="admin-management-right-modify-body-content">
+                        <p><%= element.noidung %></p>
+                      </div>
+                    </div>
+                  </div>
+                <% }) %>
                 
-                <div class="admin-management-right-modify-news">
+                
+                <!-- <div class="admin-management-right-modify-news">
                   <div class="admin-management-right-modify-header">
                     <p>Tiêu đề của bài báo</p>
                     <div class="admin-management-right-modify-option">
@@ -201,9 +236,9 @@
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
-                <div class="admin-management-right-modify-news">
+                <!-- <div class="admin-management-right-modify-news">
                   <div class="admin-management-right-modify-header">
                     <input type="text" value='Tiêu đề của bài báo'>
                     <div class="admin-management-right-modify-option">
@@ -220,7 +255,7 @@
                       <textarea>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</textarea>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
               </div>
             </div>
