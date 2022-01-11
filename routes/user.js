@@ -84,7 +84,7 @@ router.get('/:uid/home', function(req, res) {
   queryList = []
   queryList.push('SELECT * from chude') // Lấy dữ liệu header
   queryList.push('SELECT id, tieude, noidung, anh FROM baibao ORDER BY thoigian DESC LIMIT 5') // Lấy danh sách tin mới nhất
-  queryList.push('SELECT baibao.id, tieude, noidung, anh, tenchude, chudeid from baibao, chude where baibao.chudeid = chude.id') // Lấy danh sách bài báo
+  queryList.push('SELECT baibao.id, tieude, noidung, anh, tenchude, chudeid from baibao, chude where baibao.chudeid = chude.id order by thoigian desc') // Lấy danh sách bài báo (từ gần tới xa)
   queryList.push(`SELECT id, username FROM user WHERE id = ${req.params.uid}`) // Lấy username
   conn.query(queryList.join('; '), (err, results) => {
     if(err) throw err

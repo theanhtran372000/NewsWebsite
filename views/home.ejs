@@ -86,7 +86,7 @@
 
           <!-- Một block tin bao gồm 1 title và nhiều tin -->
           <%  const topicList = availableTopics
-              const previewLength = 35 // lấy 35 từ đầu tiên trong bản tin làm preview
+              const previewLength = 40 // lấy 35 từ đầu tiên trong bản tin làm preview
               topicList.forEach(function(topic){ %>
                 <!-- Tiêu đề -->
                 <div class="categorical-news-items-title">
@@ -95,7 +95,8 @@
                   <a href="<%= `/user/${userid}/category/${topic.chudeid}` %>">Xem thêm <i class="fas fa-angle-double-right"></i></a>
                 </div>
                 <div class="categorical-news-items">
-                <% categoricalNews[topic['tenchude']].forEach(function(news){ %>
+                  <!-- Chỉ hiển thị 6 tin gần nhất -->
+                <% categoricalNews[topic['tenchude']].splice(0, 6).forEach(function(news){ %> 
                   <div class="categorical-news-item">
                     <div class="categorical-news-item-image">
                       <img src="<%= news.anh %>" alt="">
@@ -103,7 +104,7 @@
                     <div class="categorical-news-item-content">
                       <!-- Đổi link bài viết ở đây -->
                       <a href="<%= `/user/${userid}/news/${news.id}` %>"><h2><%= news.tieude %></h2></a> 
-                      <p> <%= news.noidung.split(' ').splice(0, previewLength).join(" ") + "..." %> </p>
+                      <p> <%= news.noidung.split(' ').splice(0, previewLength).join(" ") + " ..." %> </p>
                     </div>
                   </div>
                   <% }) %>

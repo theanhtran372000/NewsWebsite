@@ -76,6 +76,7 @@ router.get('/', function(req, res) {
 //   conn.end()
 // });
 
+// Tìm tin tức dựa trên ảnh
 router.get('/findNewsByImageSrc', function(req, res){
   const src = req.query.src
   console.log(src);
@@ -107,6 +108,7 @@ router.get('/findNewsByImageSrc', function(req, res){
   conn.end()
 })
 
+// Tìm tin tức theo từ khóa có thông tin về số lượng và vị trí
 router.get('/queryNews', function(req, res){
   // Thông tin được gửi lên
   const keyword = req.query.keyword
@@ -154,16 +156,17 @@ router.get('/queryNews', function(req, res){
   conn.end()
 })
 
-router.get('/category', function(req, res) {
-  res.render('category');
-});
+// router.get('/category', function(req, res) {
+//   res.render('category');
+// });
 
 router.get('/detail', function(req, res) {
   res.render('detail');
 });
 
 router.get('/search', function(req, res) {
-  res.render('search');
+
+
 });
 
 module.exports = router;
