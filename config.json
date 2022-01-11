@@ -1,6 +1,13 @@
 {
+  "accessNumber": 37,
+  "DBInfo": {
     "host": "localhost",
     "user": "root",
     "password": "372000",
     "database": "news_website"
+  },
+  "badwords": [
+    "fuck you",
+    "fuck"
+  ]
 }

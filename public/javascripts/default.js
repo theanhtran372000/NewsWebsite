@@ -60,7 +60,7 @@ function resizeHandler (){
     }
     else{
         str = ''
-        const limit = 9
+        const limit = 8
 
         if(topicList.length < limit){
             for (let i = 0; i < topicList.length; i++){

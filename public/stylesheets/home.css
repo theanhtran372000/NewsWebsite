@@ -231,8 +231,12 @@
     }
 
     .categorical-news-item{
-        margin-right: 0px;
+        margin-right: 10px;
         width: 100%;
+    }
+
+    .categorical-news-item:nth-child(odd) {
+        margin-right: 10px;
     }
     
     .categorical-news-item-image img{

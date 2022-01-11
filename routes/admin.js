@@ -1,11 +1,15 @@
+// --------------------- Phạm Xuân Lộc --------------------------------- //
+
 var express = require('express');
 var router = express.Router();
 var database = require('../database')
+const editJsonFile = require("edit-json-file")
+const dirList = __dirname.replace(/\\/g, '/').split('/')
+const accessInfo = editJsonFile(`${dirList.splice(0, dirList.length - 1).join('/')}/config.json`)
 
 var multer = require('multer');
 const e = require('express');
 const { route } = require('express/lib/application');
-// const { send } = require('express/lib/response');
 
 // lưu trữ file ảnh của admin
 var storageadmin = multer.diskStorage({
@@ -27,7 +31,6 @@ var storagenews = multer.diskStorage({
   filename: function(req, file, cb){
     var date = new Date()
     var datestring = `${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()}_${Math.floor(Math.random() * 100) + 1}.png` 
-    // date = date.replace(/:/g, '_')
     cb(null, datestring)
   }
 })
@@ -55,11 +58,6 @@ var uploadnews = multer({
   },
   fileFilter: fileFilter
 }).single('file')
-
-// /* GET users listing. */
-// router.get('/', function(req, res) {
-//   res.render('admin');
-// });
 
 // Đăng nhập với quyền là admin
 router.post('/login', function(req, res){
@@ -127,6 +125,7 @@ router.get('/:id/home', function(req, res){
       listTopic: arr,
       listTopics : listTopics,
       admin: admin,
+      accessNumber: accessInfo.get('accessNumber'),
       news: news,
       countUser: countUser,
       countNews: countNews
@@ -162,7 +161,7 @@ router.get('/:id/home/checkadmin', function(req, res){
         res.send("err")
       }else{
         var date = new Date()
-        var datastring = date.getFullYear() + "-" + date.getMonth() + 1 + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+        var datastring = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
         var pathfile = '/' + req.file.path.toString().replace(/\\/g, '/')
         var date = new Date()
         console.log(req.file)
@@ -200,7 +199,7 @@ router.get('/:id/home/checkadmin', function(req, res){
       }else{
         var pathfile = '/' + req.file.path.toString().replace(/\\/g, '/')
         var date = new Date()
-        var datastring = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+        var datastring = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
         console.log("date : " + date )
         console.log(req.file)
           if(err) throw err

@@ -1,98 +1,41 @@
+// Hằng số
+const newsPerPage = 20 // số tin hiển thị trên 1 trang
+
 document.addEventListener('DOMContentLoaded', function(){
     
     // xử lý select
     const sortSelect = document.querySelector('.categorical-news-items-title-sort-time select')
-    const colSelect = document.querySelector('.categorical-news-items-title-col-number select')
-    const newsSelect = document.querySelector('.categorical-news-items-title-news-number select')
-    const defaultMargin = 12
-    
 
     sortSelect.addEventListener('change', function(){
         const currentSortType = sortSelect.value
-        const currentNumNews = newsSelect.value
         
-        sendChangeDisplayRequest(currentSortType, currentNumNews, 1) // trở về page 1
+        sendChangeDisplayRequest(currentSortType, newsPerPage, 1) // trở về page 1
         setCurrentPage(1)
-    })
-
-    newsSelect.addEventListener('change', function(){
-        const currentSortType = sortSelect.value
-        const currentNumNews = newsSelect.value
-        
-        sendChangeDisplayRequest(currentSortType, currentNumNews, 1) // trở về page 1
-        setCurrentPage(1)
-    })
-
-    // Xử lý thay đổi số cột
-    function changeColNumberHandler(numCol) {
-        const defaultHeight = document.querySelector('.categorical-news-item-image img').height
-        const newsWidth = 100 / numCol
-        const preValue = colSelect.getAttribute('data-prev')
-        colSelect.setAttribute('data-prev', numCol)
-        const items = document.querySelectorAll('.categorical-news-item')
-        items.forEach(function(item){
-            item.style.width = 'calc(' + newsWidth + '% - 12px)'
-            item.style.marginBottom = (defaultMargin * preValue / numCol) + 'px'
-            const image = item.querySelector('img')
-            image.style.height = (defaultHeight * preValue / numCol) + 'px'
-            if(numCol === 4){
-                item.querySelector('p').style.display = 'none'
-            }
-            else{
-                item.querySelector('p').style.display = 'block'
-            }
-        })
-    }
-
-    colSelect.addEventListener('change', function(){
-      const numCol = +this.value
-      changeColNumberHandler(numCol)
-    })
-
-    // xử lý resize window
-    window.addEventListener('resize', function(){
-        if(window.innerWidth <= 800){
-            const images = document.querySelectorAll('.categorical-news-item-image img')
-            const preValue = colSelect.getAttribute('data-prev')
-
-            images.forEach(function(image){
-                image.style.height = 36 * 2 / preValue + 'px'
-            })
-        }
-        else{
-            const images = document.querySelectorAll('.categorical-news-item-image img')
-            const preValue = colSelect.getAttribute('data-prev')
-
-            images.forEach(function(image){
-                image.style.height = 60 * 2 / preValue + 'px'
-            })
-        }
     })
     
 }, false);
 
 // Về trang trước
 function prevPage(){
-    const currentPage = + document.querySelector('.current-page').innerHTML
+    const currentPage = + document.querySelector('.current-page a').innerHTML
     const currentSortType = document.querySelector('.categorical-news-items-title-sort-time select').value
-    const currentNumNews = document.querySelector('.categorical-news-items-title-news-number select').value
+    
     if(currentPage == 1) return
     else{
-        sendChangeDisplayRequest(currentSortType, currentNumNews, currentPage - 1)
+        sendChangeDisplayRequest(currentSortType, newsPerPage, currentPage - 1)
         setCurrentPage(currentPage - 1)
     }
 }
 
 // tới trang sau
 function nextPage(){
-    const currentPage = + document.querySelector('.current-page').innerHTML
+    const currentPage = + document.querySelector('.current-page a').innerHTML
     const currentSortType = document.querySelector('.categorical-news-items-title-sort-time select').value
-    const currentNumNews = document.querySelector('.categorical-news-items-title-news-number select').value
-
-    const maxPage = Math.ceil((+ document.querySelector('.num-result').innerHTML) / currentNumNews)
+    
+    const maxPage = Math.ceil((+ document.querySelector('.num-result').innerHTML) / newsPerPage)
     if(currentPage >= maxPage) return
     else{
-        sendChangeDisplayRequest(currentSortType, currentNumNews, currentPage + 1)
+        sendChangeDisplayRequest(currentSortType, newsPerPage, currentPage + 1)
         setCurrentPage(currentPage + 1)
     }
 }
@@ -153,22 +96,30 @@ function setCurrentPage(page){
     const pageDisplay = document.querySelector('.categorical-news-items-bottom p')
     
     // Tính max page
-    const currentNumNews = document.querySelector('.categorical-news-items-title-news-number select').value
-    const maxPage = Math.ceil((+ document.querySelector('.num-result').innerHTML) / currentNumNews)
+
+    const maxPage = Math.ceil((+ document.querySelector('.num-result').innerHTML) / newsPerPage)
 
     var str = ''
 
     for(let i = 1; i < page; i++){
-        str += i + ' '
+        str += `<a onclick="changePage(this)">${i}</a>` + '<span>&emsp;</span> '
     }
 
-    str += `<span class="current-page">${page}</span>`
+    str += `<span class="current-page"><a onclick="changePage(this)">${page}</a></span> <span>&emsp;</span> `
 
-    for(let i = page + 1; i < maxPage; i++){
-        str += i + ' '
+    for(let i = page + 1; i <= maxPage; i++){
+        str += `<a onclick="changePage(this)">${i}</a>` + '<span>&emsp;</span> '
     }
 
     pageDisplay.innerHTML = `
-    <i onclick="prevPage()" class="fas fa-angle-double-left prev-button"></i>${str}<i onclick="nextPage()" class="fas fa-angle-double-right next-button"></i>
+    <i onclick="prevPage()" class="fas fa-angle-double-left prev-button"></i> <span>&emsp;</span> ${str} <i onclick="nextPage()" class="fas fa-angle-double-right next-button"></i>
     `
+}
+
+function changePage(page){
+    const currentPage = + page.innerHTML
+    const currentSortType = document.querySelector('.categorical-news-items-title-sort-time select').value
+
+    sendChangeDisplayRequest(currentSortType, newsPerPage, currentPage)
+    setCurrentPage(currentPage)
 }

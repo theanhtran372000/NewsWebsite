@@ -81,6 +81,23 @@
     width: 70%;
 }
 
+.login-content-left-body-register .login-content-left-body-input{
+    margin-bottom: 16px;
+}
+
+.login-content-left-body-register .login-content-left-body-input p{
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.login-content-left-body-register .login-content-left-body-input input{
+    font-size: 16px;
+}
+
+.login-content-left-body-register .login-content-left-body-checkbox {
+    margin-bottom: 16px;
+}
+
 .login-content-left-body-input p{
     font-size: 16px;
     font-weight: bold;

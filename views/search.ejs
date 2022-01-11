@@ -26,7 +26,13 @@
     <section class="categorical-news-section">
       <div class="container">
         <h1>
-          Từ khóa <span class="key-word" style="color: deepskyblue;"><%= searchString %></span> - <span class="num-result"><%= numNews %></span> kết quả
+          
+          <%if(searchString.length > 0){ %>
+            Từ khóa <span class="key-word" style="color: deepskyblue;"><%= searchString %></span> - <span class="num-result"><%= numNews %></span> kết quả
+          <% } else {%>
+            Tìm tất cả tin tức - <span class="num-result"><%= numNews %></span> kết quả
+          <% } %>
+          
         </h1>
         <div class="categorical-news">
           <!-- Một block tin bao gồm 1 title và nhiều tin -->
@@ -41,7 +47,7 @@
                   <option value="random">Xem ngẫu nhiên</option>
                 </select>
               </div>
-              <div class="categorical-news-items-title-news-number">
+              <!-- <div class="categorical-news-items-title-news-number">
                 <span>Số tin</span>
                 <select name="" id="">
                   <option value="8">8</option>
@@ -56,22 +62,29 @@
                   <option value="2" selected>2</option>
                   <option value="4">4</option>
                 </select>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="categorical-news-items">
-            <% listNews.forEach(function(news){ %>
-              <div class="categorical-news-item">
-                <div class="categorical-news-item-image">
-                  <img src="<%= news.anh %>" alt="">
+            <%const newsPerPage = 20
+              const newsMaxLength = 40
+
+              if (numNews > 0) {
+                for (let i = 0; i < Math.min(newsPerPage, listNews.length); i++) { %>
+                <div class="categorical-news-item">
+                  <div class="categorical-news-item-image">
+                    <img src="<%= listNews[i].anh %>" alt="">
+                  </div>
+                  <div class="categorical-news-item-content">
+                    <% const path = `/user/${userid}/news/${listNews[i].id}` %>
+                    <a href="<%= path %>"><h2><%= listNews[i].tieude %></h2></a>
+                    <p><%= listNews[i].noidung.split(' ').splice(0, newsMaxLength).join(' ') + ((listNews[i].noidung.split(' ').length  > newsMaxLength)? ' ...': '') %></p>
+                  </div>
                 </div>
-                <div class="categorical-news-item-content">
-                  <% const path = `/user/${userid}/news/${news.id}` %>
-                  <a href="<%= path %>"><h2><%= news.tieude %></h2></a>
-                  <p><%= news.noidung.split(' ').splice(0, 30).join(' ') + ((news.noidung.split(' ').length  > 30)? ' ...': '') %></p>
-                </div>
-              </div>
-            <% }) %>
+              <% } 
+              } else { %>
+                <p style="text-align: center; font-size: 16px; font-style: italic; width: 100%; margin-top: 12px;">Không tìm thấy kết quả liên quan</p>
+              <% } %>
 
             <!-- <div class="categorical-news-item">
               <div class="categorical-news-item-image">
@@ -196,7 +209,12 @@
           </div>
           <div class="categorical-news-items-bottom">
             <p>
-              <i onclick="prevPage()" class="fas fa-angle-double-left prev-button"></i> 1 <span class="current-page">2</span> 3 4 5 6 7 <i onclick="nextPage()" class="fas fa-angle-double-right next-button"></i>
+              <i onclick="prevPage()" class="fas fa-angle-double-left prev-button"> </i><span>&emsp;</span>
+              <span class="current-page"> <a onclick="changePage(this)">1</a></span><span>&emsp;</span>
+              <% for (let i = 2; i <= Math.ceil(numNews / newsPerPage); i++) {%> 
+                <a onclick="changePage(this)"><%= i %></a><span>&emsp;</span>
+              <% } %>
+              <i onclick="nextPage()" class="fas fa-angle-double-right next-button"></i>
             </p>
           </div>
         </div>
@@ -204,6 +222,7 @@
     </section>
 
     <% include footer %>
+
   </body>
 
   <script>

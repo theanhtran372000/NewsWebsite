@@ -9,7 +9,12 @@ header{
     background-color: white;
 }
 
-.logo {
+.logo{
+    width: 300px;
+    justify-content: left;
+}
+
+.logo a{
     display: flex;
     align-items: center;
 }
@@ -27,6 +32,7 @@ header{
 
 .menu {
     display: flex;
+    justify-content: center;
 }
 
 .menu > li {
@@ -71,6 +77,7 @@ header{
 
 .others {
     display: flex;
+    width: 300px;
     justify-content: right;
 }
 
@@ -100,7 +107,7 @@ header{
 }
 
 .others > li:first-child input {
-    width: 100%;
+    width: 120px;
     border: none;
     border-bottom: 1px solid var(--theme-color-2);
     outline: none;

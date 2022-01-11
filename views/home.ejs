@@ -23,6 +23,12 @@
   <body>
     <% include header %>
 
+    <%
+      // Hằng số
+      const newsPerTopic = 6
+      const latestNewsMaxLength = 200
+    %>
+
     <section class="latest-news-section">
       <div class="container">
         <h1>Tin tức mới nhất</h1>
@@ -62,7 +68,7 @@
               <h1>
                 <%= latestNews[0].tieude %>
               </h1>
-              <%  const content = latestNews[0].noidung %>
+              <%  const content = latestNews[0].noidung.split(' ').splice(0, latestNewsMaxLength).join(' ') + ' ...' %>
               <p><%= content %></p>
 
               <!-- <p>
@@ -86,7 +92,7 @@
 
           <!-- Một block tin bao gồm 1 title và nhiều tin -->
           <%  const topicList = availableTopics
-              const previewLength = 40 // lấy 35 từ đầu tiên trong bản tin làm preview
+              const previewLength = 40 // lấy 40 từ đầu tiên trong bản tin làm preview
               topicList.forEach(function(topic){ %>
                 <!-- Tiêu đề -->
                 <div class="categorical-news-items-title">
@@ -96,7 +102,7 @@
                 </div>
                 <div class="categorical-news-items">
                   <!-- Chỉ hiển thị 6 tin gần nhất -->
-                <% categoricalNews[topic['tenchude']].splice(0, 6).forEach(function(news){ %> 
+                <% categoricalNews[topic['tenchude']].splice(0, newsPerTopic).forEach(function(news){ %> 
                   <div class="categorical-news-item">
                     <div class="categorical-news-item-image">
                       <img src="<%= news.anh %>" alt="">

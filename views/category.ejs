@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tin tức thế giới</title>
+    <title>Tin theo chủ đề</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/public/images/favicon.ico">
@@ -26,7 +26,9 @@
     <section class="categorical-news-section">
       <div class="container">
         <h1>
-          Tin tức thế giới
+          
+          Chủ đề <span style="color: deepskyblue;"><%= tenchude %></span>  - <span class="num-result"><%= numNews %></span> kết quả
+          
         </h1>
         <div class="categorical-news">
           <!-- Một block tin bao gồm 1 title và nhiều tin -->
@@ -41,26 +43,25 @@
                   <option value="random">Xem ngẫu nhiên</option>
                 </select>
               </div>
-              <div class="categorical-news-items-title-news-number">
-                <span>Số tin</span>
-                <select name="" id="">
-                  <option value="8">8</option>
-                  <option value="20" selected>20</option>
-                  <option value="40">40</option>
-                </select>
-              </div>
-              <div class="categorical-news-items-title-col-number">
-                <span>Số cột</span>
-                <select name="" id="" data-prev='2'>
-                  <option value="1">1</option>
-                  <option value="2" selected>2</option>
-                  <option value="4">4</option>
-                </select>
-              </div>
             </div>
           </div>
           <div class="categorical-news-items">
-            <div class="categorical-news-item">
+            <%const newsPerPage = 20
+            const newsMaxLength = 40
+              for (let i = 0; i < Math.min(newsPerPage, listNews.length); i++) { %>
+              <div class="categorical-news-item">
+                <div class="categorical-news-item-image">
+                  <img src="<%= listNews[i].anh %>" alt="">
+                </div>
+                <div class="categorical-news-item-content">
+                  <% const path = `/user/${userid}/news/${listNews[i].id}` %>
+                  <a href="<%= path %>"><h2><%= listNews[i].tieude %></h2></a>
+                  <p><%= listNews[i].noidung.split(' ').splice(0, newsMaxLength).join(' ') + ((listNews[i].noidung.split(' ').length  > newsMaxLength)? ' ...': '') %></p>
+                </div>
+              </div>
+            <% } %>
+
+            <!-- <div class="categorical-news-item">
               <div class="categorical-news-item-image">
                 <img src="/public/images/slide1.jpg" alt="">
               </div>
@@ -178,11 +179,17 @@
                 <h2>Tiêu đề bản tin</h2>
                 <p>Nội dung bản tin: ... </p>
               </div>
-            </div>
+            </div> -->
+
           </div>
           <div class="categorical-news-items-bottom">
             <p>
-              <i class="fas fa-angle-double-left prev-button"></i> <span class="current-page">1</span> 2 3 4 5 6 7 <i class="fas fa-angle-double-right next-button"></i>
+              <i onclick="prevPage()" class="fas fa-angle-double-left prev-button"> </i><span>&emsp;</span>
+              <span class="current-page"> <a onclick="changePage(this)">1</a></span><span>&emsp;</span>
+              <% for (let i = 2; i <= Math.ceil(numNews / newsPerPage); i++) {%> 
+                <a onclick="changePage(this)"><%= i %></a><span>&emsp;</span>
+              <% } %>
+              <i onclick="nextPage()" class="fas fa-angle-double-right next-button"></i>
             </p>
           </div>
         </div>
@@ -190,11 +197,9 @@
     </section>
 
     <% include footer %>
+
   </body>
 
   <script>
-
-    
-
   </script>
 </html>

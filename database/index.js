@@ -1,4 +1,4 @@
-const config = require('./config.json')
+const config = require('../config.json').DBInfo
 const mysql = require('mysql')
 
 module.exports = {

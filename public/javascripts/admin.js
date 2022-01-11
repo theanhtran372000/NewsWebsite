@@ -8,70 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   })
 
-  // xử lý sự kiện ấn nút chỉnh sửa
-  // const modifyButtons = document.querySelectorAll('.modify')
-  // modifyButtons.forEach(function(button, index){
-  //   button.addEventListener('dblclick', function(){
-  //     const id = this.parentNode.parentNode.parentNode.children[0].innerHTML
-  //     const oldTitle = this.parentNode.parentNode.parentNode.querySelector('.admin-management-right-modify-header > p').innerHTML
-  //     const oldContent = this.parentNode.parentNode.parentNode.querySelector('.admin-management-right-modify-body-content> p').innerHTML
-  //     const oldavatar = this.parentNode.parentNode.parentNode.querySelector('.admin-management-right-modify-body-image > img').src
-  //     console.log(oldavatar)
-
-  //     this.parentNode.parentNode.parentNode.innerHTML = `
-  //     <p style="display: none;" >${id}</p>
-  //     <div class="admin-management-right-modify-header">
-  //       <input type="text" value='${oldTitle}'>
-  //       <div class="admin-management-right-modify-option">
-  //         <i class="fas fa-check confirm" onclick="confirmeditnew(this)" ></i>
-  //         <i class="fas fa-times cancel" onclick="canceleditnews()" ></i>
-  //       </div>
-  //     </div>
-  //     <div class="admin-management-right-modify-body">
-  //       <div class="admin-management-right-modify-body-image">
-  //         <img src="${oldavatar}" alt="">
-  //         <input type="file" id="file-edit-news" accept="image/png, image/jpeg" >
-  //       </div>
-  //       <div class="admin-management-right-modify-body-content">
-  //         <textarea>${oldContent}</textarea>
-  //       </div>
-  //     </div>
-  //     `
-
-  //     // thêm lại sự kiện cho mục text area
-  //     // chưa thực hiện
-
-  //     // thêm sự kiện cho 2 button
-  //     // const confirmButton = this.parentNode.parentNode.parentNode.querySelector('.confirm')
-  //     // const cancelButton = this.parentNode.parentNode.parentNode.querySelector('.cancel')
-  //     // chưa thực hiện
-
-  //   })
-  // })
-
-  // xử lý sự kiện ấn nút xóa
-  // const deleteButtons = document.querySelectorAll('.delete')
-  // deleteButtons.forEach(function(button, index){
-  //   button.addEventListener('dblclick', function(){
-  //     this.parentNode.parentNode.parentNode.style.display = 'none'
-
-  //   // xử lý phía cơ sở dữ liệu
-  //   console.log(this.parentNode.parentNode.parentNode.children[0].innerHTML)
-  //   var id = this.parentNode.parentNode.parentNode.children[0].innerHTML
-  //   var xhttp = new XMLHttpRequest()
-  //   xhttp.open('delete', `/admin/delete/${id}`, true )
-  //   xhttp.onreadystatechange = function(){
-  //     if(this.readyState === 4 && this.status === 200){
-  //       const res =JSON.parse(this.responseText)
-  //       if(res.status === 'success'){
-  //         location.reload()
-  //       }
-  //     }
-  //   }
-  //   xhttp.send()
-  //   })
-  // })
-
   //lấy dữ liệu form thêm admin
   var hotenadminnew = document.getElementById('hotenadminnew')
   var usernameadminnew = document.getElementById('usernameadminnew')
@@ -121,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
       xhttp.send()
     } else if (hotenadminnew.value !== "" && usernameadminnew !== "" && passwordadminnew !== ""
       && repasswordadminnew !== "" && file.value !== "" && passwordadminnew.value !== repasswordadminnew.value) {
-      // alert('mật khẩu nhập lại không khớp')
+      
       var textResult = document.getElementById('post-announcement-admin')
       textResult.innerHTML = "Mật khẩu nhập lại không khớp!"
       textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
@@ -144,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             passwordadminnew.value = ''
             repasswordadminnew.value = ''
             file.value = ""
-            // alert("thêm admin thành công")
+            
             var textResult = document.getElementById('post-announcement-admin')
             textResult.innerHTML = "Thêm thành công!"
             textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
@@ -178,12 +114,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (this.readyState == 4 && this.status === 200) {
           const res = JSON.parse(this.responseText)
           if (res.status === 'success') {
-            // alert('Bạn đã thêm bài báo mới thành công')
+            
             titleNews.value = ''
             contentNews.value = ''
             fileNews.value = ''
             nguonNews.value = ''
-            // location.reload()
+            
             var textResult = document.getElementById('post-announcement-news')
             textResult.innerHTML = "Bạn đã thêm bài báo mới thành công!"
             textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')

@@ -1,21 +1,24 @@
 <header>
     <div class="logo">
-        <img src="/public/images/pic1.png" alt="logo">
-        <span class="web-name">Lazy news</span>
+        <a href="/user/<%= userid %>/home">
+            <img src="/public/images/pic1.png" alt="logo">
+            <span class="web-name">Lazy news</span>
+        </a>
     </div>
 
     <div class="menu">
-        <% if(listTopic.length < 9) {
+        <% const maxNumTopic = 8
+        if(listTopic.length < maxNumTopic) {
             for(let i = 0; i < listTopic.length; i++){ %>
                 <li><a href="<%= `/user/${userid}/category/${listTopic[i].chudeid}` %>" data-id='<%= listTopic[i].chudeid %>' class="topic"><%= listTopic[i].tenchude %></a></li>
         <% }
         } else {
-            for(let i = 0; i < 8; i++) { %>
+            for(let i = 0; i < maxNumTopic - 1; i++) { %>
                 <li><a href="<%= `/user/${userid}/category/${listTopic[i].chudeid}` %>" data-id='<%= listTopic[i].chudeid %>' class="topic"><%= listTopic[i].tenchude %></a></li>
             <% } %>
             <li><a href="#">Thêm <i class="fas fa-caret-down"></i></a>
                 <ul class="sub-menu">
-                    <% for(let i = 8; i < listTopic.length; i++) { %>
+                    <% for(let i = maxNumTopic - 1; i < listTopic.length; i++) { %>
                         <li><a href="<%= `/user/${userid}/category/${listTopic[i].chudeid}` %>" data-id='<%= listTopic[i].chudeid %>' class="topic"><%= listTopic[i].tenchude %></a></li>
                     <% }
         } %>

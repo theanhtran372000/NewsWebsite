@@ -1,16 +1,13 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const database = require('../database')
+const editJsonFile = require("edit-json-file")
+const dirList = __dirname.replace(/\\/g, '/').split('/')
+const accessInfo = editJsonFile(`${dirList.splice(0, dirList.length - 1).join('/')}/config.json`)
+const badWords = require('../config.json').badwords
+const e = require('express')
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  res.send('User');
-});
-
-// Trang đăng nhập
-router.get('/home', function(req, res) {
-  res.render('index');
-});
+// --------------------- Trần Thế Anh --------------------------------- //
 
 // Đăng nhập với tài khoản user
 router.post('/login', function(req, res){
@@ -77,6 +74,13 @@ router.post('/register', function(req, res){
 
 // Load trang thông tin user
 router.get('/:uid/home', function(req, res) {
+  // Tăng số lượt truy cập trang web  
+  const newAccessNumber = + accessInfo.get('accessNumber') + 1
+  accessInfo.set("accessNumber", newAccessNumber); // Tăng số lượt truy cập
+  accessInfo.save() // Lưu dữ liệu
+  
+  console.log('Acess number: ', accessInfo.get("accessNumber"));
+
   // Tạo kết nối db
   const conn = database.createConnection()
 
@@ -102,7 +106,7 @@ router.get('/:uid/home', function(req, res) {
       latestNews.push({
         id: item.id,
         tieude: item.tieude,
-        noidung: item.noidung.split(' ').splice(0, 200).join(' ') + ' ...',
+        noidung: item.noidung,
         anh: item.anh
       })
     })
@@ -201,5 +205,210 @@ router.get('/:uid/search', function(req, res){
   conn.end()
 })
 
+
+// --------------------- Nguyễn Quang Hưng --------------------------------- //
+
+// Page News Detail
+router.get('/:uid/news/:newsid', function(req, res) {
+  // Tạo kết nối db
+  const conn = database.createConnection()
+
+  var userid = req.params.uid
+  var newsid = req.params.newsid
+
+  // Danh sách query
+  queryList = []
+  queryList.push('SELECT * from chude') // Lấy dữ liệu header
+  queryList.push(`SELECT id, username FROM user WHERE id = ${userid}`) // Lấy username
+  queryList.push(`SELECT * FROM baibao WHERE id = ${newsid}`) // Lấy bài báo theo id
+  queryList.push(`SELECT admin.hoten FROM admin, baibao WHERE admin.id=baibao.adminid AND baibao.id=${newsid}`)
+  queryList.push(`SELECT b2.* FROM baibao b1, baibao b2 WHERE b1.id=${newsid} AND b1.chudeid=b2.chudeid AND b1.id != b2.id ORDER BY thoigian DESC LIMIT 10`)
+  queryList.push(`SELECT u.username, c.noidung, c.rate, c.thoigian FROM user u, comment c WHERE c.baibaoid=${newsid} AND c.userid=u.id ORDER BY c.thoigian DESC`)
+  conn.query(queryList.join('; '), (err, results) => {
+    if(err) throw err
+
+    // lấy topic
+    const topics = []
+    results[0].forEach(function(item){
+      topics.push({
+        chudeid: item.id,
+        tenchude: item.tenchude
+      })
+    })
+
+    //lấy id, username
+    const userid = results[1][0].id
+    const username = results[1][0].username
+
+
+    // lấy bài viết
+    const news = results[2][0]
+
+    // lấy tác giả
+    author = results[3][0].hoten
+
+    // lấy bài viết liên quan
+    relatedNews = results[4]
+
+    // lấy comments
+    comments = results[5]
+
+    // xử lý rate
+    var starCount = [0,0,0,0,0]
+    comments.forEach(function(item){
+        tmp = item.rate
+        if (tmp==1) starCount[0]++
+        else if (tmp==2) starCount[1]++
+        else if (tmp==3) starCount[2]++
+        else if (tmp==4) starCount[3]++
+        else starCount[4]++
+
+    })
+
+    res.render('detail', {
+      userid: userid,
+      username: username,
+      listTopic: topics,
+      news: news,
+      relatedNews: relatedNews,
+      author: author,
+      starCount: starCount,
+      comments: comments
+    });
+  }) 
+
+  conn.end()
+});
+
+function checkCmt(noidung){
+  // check cmt
+  lowerWord = noidung.toLowerCase()
+  const wordCheck = badWords
+  for (var i=0; i<wordCheck.length; i++){
+      if (lowerWord.search(wordCheck[i]) >= 0) {
+          return false; 
+      }
+  }
+  
+  return true
+}
+
+// api add comment
+router.post('/addComment', function(req, res){
+
+  var noidung = req.body.noidung
+  var rate = req.body.rate
+  var email = req.body.email
+  var baibaoid = req.body.baibaoid
+  var userid = req.body.userid
+
+  var date = new Date()
+  var thoigian = date.getFullYear() + "-" + date.getMonth()+1 + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+
+  var isValid = checkCmt(noidung)
+  if(! isValid){
+    res.send({
+      status: 'Fail',
+      message: 'Bình luận chứa từ không hợp lệ!'
+    })
+  }
+  else{
+    // Tạo kết nối db
+    const conn = database.createConnection()
+
+    // chen comment moi
+    conn.query(`INSERT INTO comment(baibaoid, userid, noidung, rate, email, thoigian) VALUES (?, ?, ?, ?, ?, ?);`, [baibaoid, userid, noidung, rate, email, thoigian], function(err, result){
+      if(err) throw err
+      
+      res.send({
+        status: 'Success',
+        message: 'Comment thành công'
+      })
+    })
+    conn.end()
+  } 
+})
+
+// api add comment
+router.post('/getAllCmt', function(req, res){
+  baibaoid = req.body.baibaoid
+
+  // Tạo kết nối db
+  const conn = database.createConnection()
+  conn.query(`SELECT u.username, c.noidung, c.rate, c.thoigian FROM user u, comment c WHERE c.baibaoid=${baibaoid} AND c.userid=u.id ORDER BY c.thoigian DESC`, function(err, result){
+    if(err) throw err
+
+    res.send({
+      status: 'Success',
+      comments: result
+    })
+
+  })
+  conn.end()
+})
+
+// --------------------- Nguyễn Huy Hiếu --------------------------------- //
+
+// tìm kiếm tin tức theo yêu cầu user
+router.get('/:uid/category/:categoryid', function(req, res){
+  const categoryid = req.params.categoryid
+  const userid = req.params.uid
+
+  // Kết nối database
+  const conn = database.createConnection()
+
+  // Danh sách query
+  queryList = []
+  queryList.push('SELECT * FROM chude') // Lấy dữ liệu header
+  queryList.push(`SELECT id, username FROM user WHERE id = ${req.params.uid}`) // Lấy username
+  queryList.push(`SELECT tenchude FROM chude WHERE id = ${categoryid}`) // Lấy tên chủ đề
+  queryList.push(`SELECT id, tieude, noidung, anh FROM baibao WHERE chudeid = ${categoryid} ORDER BY thoigian DESC LIMIT 20`) // Lấy danh sách tin
+  queryList.push(`SELECT COUNT(*) AS soluong FROM baibao WHERE chudeid = ${categoryid}`) // Lấy danh sách tin
+  conn.query(queryList.join('; '), (err, results) => {
+    if(err) throw err
+
+    // Lấy thông tin cho Header
+    const topics = []
+    results[0].forEach(function(item){
+      topics.push({
+        chudeid: item.id,
+        tenchude: item.tenchude
+      })
+    })
+
+    // Lấy thông tin user
+    const username = results[1][0].username
+    const userid = results[1][0].id
+
+    // Tên chủ đề
+    const tenchude = results[2][0].tenchude
+    
+    // Lấy tin thuộc chủ đề trên
+    const listNews = []
+    results[3].forEach(function(news){
+      listNews.push({
+        id: news.id,
+        tieude: news.tieude,
+        noidung: news.noidung,
+        anh: news.anh
+      })
+    })
+
+    // Lấy số lượng
+    const soluong = results[4][0].soluong
+
+    res.render('category', {
+      userid: userid,
+      username: username,
+      listNews: listNews,
+      tenchude: tenchude,
+      listTopic: topics,
+      numNews: soluong
+    });
+
+  })
+
+  conn.end()
+})
 
 module.exports = router;

@@ -21,7 +21,7 @@
     <script src="/public/javascripts/detail.js"></script>
   </head>
   <body>
-    
+    <% include header %>
 
     <section class="news-detail-section">
         <div class="container">
@@ -29,26 +29,26 @@
                 <div class="news-detail-left">
                     <div class="news-detail-left-content">
                         <div class="news-detail-left-content-title">
-                            <h1>440.000 doanh nghiệp Anh 'chết đứng' trước văn hóa thanh toán chậm</h1>
+                            <h1>
+                                <%= news.tieude %>
+                            </h1>
                         </div>
                         <div class="news-detail-left-content-image">
-                            <img src="/public/images/slide3.jpg" alt="">
+                            <img src="<%=news.anh %>" alt="">
                             <p>Hình ảnh minh họa <span style="color: red;">*</span></p>
                         </div>
                         <div class="news-detail-left-content-body">
-                            <p>Theo Liên đoàn các doanh nghiệp nhỏ tại Anh (FSB), hơn 440.000 doanh nghiệp nhỏ có thể buộc phải ngừng kinh doanh do bị chậm thanh toán hóa đơn.</p>
+                            <!-- Do noi dung bai bao vao -->
+                            <% news.noidung.split('\n').forEach(function(item){ %>
+                                
+                                <p><%= item %></p>
+                            
+                            <% }) %>
 
-                            <p>Gần một phần ba số doanh nghiệp nhỏ được khảo sát nói với FSB rằng, họ đã ghi nhận tình trạng chậm thanh toán hóa đơn tăng lên trong ba tháng qua. Ít nhất 8% doanh nghiệp cảnh báo rằng, vấn đề đã trở nên tồi tệ đến mức đe dọa khả năng tồn tại của doanh nghiệp họ. Tổ chức này đã kêu gọi sự can thiệp khẩn cấp của chính phủ để cải thiện cách thanh toán của các công ty. </p>
-                                
-                            <p>Trong nhiều năm, vấn đề thanh toán chậm - thường xảy ra bởi các công ty có giá trị vốn hóa lớn tại sàn London - đã đeo bám khu vực doanh nghiệp nhỏ. Theo lẽ thường, các công ty thường phải thanh toán cho nhà cung cấp, tiền lương và các hóa đơn khác đúng hạn, nhưng nhiều doanh nghiệp nhỏ phải chờ lâu hơn để được các doanh nghiệp lớn này thanh toán. </p>
-                                
-                            <p>FSB cho biết, hơn 400.000 công ty nhỏ đã đóng cửa kể từ khi bắt đầu đại dịch vì nhiều lý do khác nhau. Trong tương lai, số lượng tương tự sẽ bị đe dọa bởi riêng vấn đề này. </p>
-                                
-                            <p>"Việc thanh toán chậm đã phá hủy hàng nghìn doanh nghiệp nhỏ ngay cả trước khi đại dịch xảy ra và đại dịch đã làm cho vấn đề trở nên tồi tệ hơn. Trong quá khứ, chính phủ đã xác định đúng đắn hơn trách nhiệm giải trình của hội đồng quản trị là chìa khóa để thúc đẩy sự thay đổi trong văn hóa này, nhưng việc giải ngân vẫn diễn ra rất chậm", Chủ tịch FSB Mike Cherry cảnh báo.</p>
                         </div>
                         <div class="news-detail-left-content-tail">
-                            <p>Tuấn Đạt</p>
-                            <p>Theo <span>Guardian</span></p>
+                            <p style="margin-bottom: 6px;"> <%=author%></p>
+                            <p>Theo <span><%=news.nguongoc%></span></p>
                         </div>
                     </div>
                     <div class="news-detail-left-comment">
@@ -59,17 +59,17 @@
                             <div class="news-detail-left-comment-input-top-comment-box row">
                                 <div class="news-detail-left-comment-input-top-comment-box-name">
                                     <p>Tên người <span style="color: red;">*</span></p>
-                                    <select name="" id="">
-                                        <option value="name" selected>Tên người dùng</option>
+                                    <select name="" id="name">
+                                        <option value="name" selected><%=username%></option>
                                         <option value="anomymous">Ẩn danh</option>
                                     </select>
                                 </div>
                                 <div class="news-detail-left-comment-input-top-comment-box-email">
-                                    <p>Email</p>
-                                    <input type="text" placeholder="Nhập email của bạn">
+                                    <p>Email <span style="color: red;">*</span></p>
+                                    <input id="email" type="text" placeholder="Nhập email của bạn">
                                 </div>
                                 <div class="news-detail-left-comment-input-top-comment-box-rate">
-                                    <p>Rating</p>
+                                    <p>Rating <span style="color: red;">*</span></p>
                                     <div class="news-detail-left-comment-input-top-comment-box-rate-star">
                                         <i class="fas fa-star fa-2x"></i>
                                         <i class="fas fa-star fa-2x"></i>
@@ -79,15 +79,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <textarea placeholder="Comment của bạn"></textarea>
+                            <textarea id="textbox" placeholder="Comment của bạn"></textarea>
                             <div class="news-detail-left-comment-input-button">
-                                <p>Bạn cần <a href="#">đăng nhập</a> để bình luận công khai</p>
-                                <button>Bình luận</button>
+                                <p>Bạn cần <a href="/">đăng nhập</a> để bình luận công khai</p>
+                                <button id="btnAddCmt" onclick="addComment()">Bình luận</button>
                             </div>
                         </div>
                         <div class="news-detail-left-comment-user-rating">
                             <h1>Đánh giá của độc giả</h1>
-                            <p>Trung bình <span>4.17 <i style="color: #ffa500;" class="fas fa-star"></i></span> với <span>624</span> đánh giá</p>
+                            <p>Trung bình <span id="avarage">11<i style="color: #ffa500;" class="fas fa-star"></i></span> với <span id="countCmt">22</span> đánh giá</p>
                             <div class="news-detail-left-comment-user-rating-content">
                                 <table>
                                     <tr>
@@ -98,7 +98,7 @@
                                                 <div class="rate-value star-5"></div>
                                             </div>
                                         </td>
-                                        <td>150</td>
+                                        <td><%=starCount[4]%></td>
                                     </tr>
                                     
                                     <tr>
@@ -109,7 +109,7 @@
                                                 <div class="rate-value star-4"></div>
                                             </div>
                                         </td>
-                                        <td>112</td>
+                                        <td><%=starCount[3]%></td>
                                     </tr>
 
                                     <tr>
@@ -120,7 +120,7 @@
                                                 <div class="rate-value star-3"></div>
                                             </div>
                                         </td>
-                                        <td>65</td>
+                                        <td><%=starCount[2]%></td>
                                     </tr>
 
                                     <tr>
@@ -131,7 +131,7 @@
                                                 <div class="rate-value star-2"></div>
                                             </div>
                                         </td>
-                                        <td>34</td>
+                                        <td><%=starCount[1]%></td>
                                     </tr>
 
                                     <tr>
@@ -142,7 +142,7 @@
                                                 <div class="rate-value star-1"></div>
                                             </div>
                                         </td>
-                                        <td>10</td>
+                                        <td><%=starCount[0]%></td>
                                     </tr>
 
                                 </table>
@@ -154,54 +154,30 @@
                                 <p>Thời gian</p>
                             </div>
                             <div class="news-detail-left-comment-list-items">
-                                <div class="news-detail-left-comment-item">
-                                    <div class="news-detail-left-comment-item-user">
-                                        <h1><i class="fas fa-user"></i> Người dùng ABC</h1>
-                                    </div>
-                                    <div class="news-detail-left-comment-item-content">
-                                        <p>Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.</p>
-                                        <p>12/8/2021</p>
-                                    </div>
-                                </div>
-                                <div class="news-detail-left-comment-item">
-                                    <div class="news-detail-left-comment-item-user">
-                                        <h1><i class="fas fa-user"></i> Người dùng ABC</h1>
-                                    </div>
-                                    <div class="news-detail-left-comment-item-content">
-                                        <p>Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.</p>
-                                        <p>12/8/2021</p>
-                                    </div>
-                                </div>
-                                <div class="news-detail-left-comment-item">
-                                    <div class="news-detail-left-comment-item-user">
-                                        <h1><i class="fas fa-user"></i> Người dùng ABC</h1>
-                                    </div>
-                                    <div class="news-detail-left-comment-item-content">
-                                        <p>Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.</p>
-                                        <p>12/8/2021</p>
-                                    </div>
-                                </div>
-                                <div class="news-detail-left-comment-item">
-                                    <div class="news-detail-left-comment-item-user">
-                                        <h1><i class="fas fa-user"></i> Người dùng ABC</h1>
-                                    </div>
-                                    <div class="news-detail-left-comment-item-content">
-                                        <p>Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.</p>
-                                        <p>12/8/2021</p>
-                                    </div>
-                                </div>
-                                <div class="news-detail-left-comment-item">
-                                    <div class="news-detail-left-comment-item-user">
-                                        <h1><i class="fas fa-user"></i> Người dùng ABC</h1>
-                                    </div>
-                                    <div class="news-detail-left-comment-item-content">
-                                        <p>Tin này hay quá đi à!!! Like và chia sẻ thôi mọi người.</p>
-                                        <p>12/8/2021</p>
-                                    </div>
-                                </div>
+                                <% if (comments.length > 0){
+                                    for(let i=0; i < Math.min(comments.length, 5); i++) { %>
+                                        <div class="news-detail-left-comment-item">
+                                            <div class="news-detail-left-comment-item-user">
+                                                <h1><i class="fas fa-user"></i><%=comments[i].username%></h1>
+                                            </div>
+                                            <div class="news-detail-left-comment-item-content">
+                                                <p><%=comments[i].noidung%></p>
+                                                <!-- <p><%=comments[i].thoigian%></p> -->
+                                                <p>
+                                                    <% const date = new Date(comments[i].thoigian) %>
+                                                    <%= `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    <% }
+                                 } else { %>
+                                    <p class="comment-announcement" style="text-align: center; margin: 20px 10px; font-style: italic; font-size: 14px;">Hiện tại không có bình luận</p>
+                                <% } %>
+
+                                
                             </div>
                             <div class="news-detail-left-comment-more">
-                                <a href="#">Hiển thị thêm</a> <i class="fas fa-angle-double-right"></i>
+                                <a href="#showMore" onclick="showMore()">Hiển thị thêm</a> <i class="fas fa-angle-double-right"></i>
                             </div>
                         </div>
                     </div>
@@ -209,45 +185,27 @@
                 <div class="news-detail-right">
                     <h1>Tin liên quan</h1>
                     <div class="news-detail-right-list-items">
-                        <div class="news-detail-right-item">
-                            <div class="news-detail-right-item-image">
-                                <img src="/public/images/slide1.jpg" alt="">
+                        <% relatedNews.forEach(function(item){ %>
+                            <div class="news-detail-right-item">
+                                <div class="news-detail-right-item-image">
+                                    <a href="<%= `/user/${userid}/news/${item.id}` %>">
+                                        <img src="<%=item.anh %>" alt="">
+                                    </a>
+                                </div>
+                                <div class="news-detail-right-item-content">
+                                    <a href="<%= `/user/${userid}/news/${item.id}` %>">
+                                        <h1><%=item.tieude%></h1>
+                                        <p>Thời gian: 
+                                            <span>
+                                                <% const date = new Date(item.thoigian) %>
+                                                <%= `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` %>
+                                            </span>
+                                        </p>
+                                    </a>
+                                    
+                                </div>
                             </div>
-                            <div class="news-detail-right-item-content">
-                                <h1>Tiêu đề của tin Tiêu đề của tin Tiêu đề của tin</h1>
-                                <p>Thời gian: 12/9/2021</p>
-                            </div>
-                        </div>
-
-                        <div class="news-detail-right-item">
-                            <div class="news-detail-right-item-image">
-                                <img src="/public/images/slide1.jpg" alt="">
-                            </div>
-                            <div class="news-detail-right-item-content">
-                                <h1>Tiêu đề của tin Tiêu đề của tin Tiêu đề của tin</h1>
-                                <p>Thời gian: 12/9/2021</p>
-                            </div>
-                        </div>
-
-                        <div class="news-detail-right-item">
-                            <div class="news-detail-right-item-image">
-                                <img src="/public/images/slide1.jpg" alt="">
-                            </div>
-                            <div class="news-detail-right-item-content">
-                                <h1>Tiêu đề của tin Tiêu đề của tin Tiêu đề của tin</h1>
-                                <p>Thời gian: 12/9/2021</p>
-                            </div>
-                        </div>
-
-                        <div class="news-detail-right-item">
-                            <div class="news-detail-right-item-image">
-                                <img src="/public/images/slide1.jpg" alt="">
-                            </div>
-                            <div class="news-detail-right-item-content">
-                                <h1>Tiêu đề của tin Tiêu đề của tin Tiêu đề của tin</h1>
-                                <p>Thời gian: 12/9/2021</p>
-                            </div>
-                        </div>
+                        <% }) %>   
                     </div>
                 </div>
             </div>
