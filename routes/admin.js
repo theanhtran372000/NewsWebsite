@@ -291,12 +291,4 @@ router.get('/:id/home/checkadmin', function(req, res){
     })
   })
 
-  router.get('/:id/home/test', function(req, res){
-    var conn = database.createConnection()
-    conn.query('select * from admin where id = 25', function(err, result){
-      if(err) throw err
-      res.send(result[0])
-    })
-  })
-
 module.exports = router;
