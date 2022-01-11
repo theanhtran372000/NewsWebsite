@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const bigImage = document.querySelector('.latest-news-big-image img')
     const smallImages = document.querySelectorAll('.latest-news-small-image img')
     var selectedIndex = 0
-    const contentLimit = 200 // hiển thị 30 từ
+    const contentLimit = 200 // hiển thị 200 từ
 
     // Sự kiện click lên ảnh nhỏ
     smallImages.forEach(function(smallImage, index){

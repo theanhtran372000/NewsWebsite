@@ -102,7 +102,7 @@ router.get('/:uid/home', function(req, res) {
       latestNews.push({
         id: item.id,
         tieude: item.tieude,
-        noidung: item.noidung,
+        noidung: item.noidung.split(' ').splice(0, 200).join(' ') + ' ...',
         anh: item.anh
       })
     })
