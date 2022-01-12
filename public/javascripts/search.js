@@ -81,7 +81,7 @@ function sendChangeDisplayRequest(sortType, numNews, pages){
     }
 
 
-    const url = new URL('http://' + window.location.host + `/queryNews`)
+    const url = new URL('https://' + window.location.host + `/queryNews`)
     url.searchParams.append('keyword', keyWord)
     url.searchParams.append('sortType', sortType)
     url.searchParams.append('numNews', numNews)
