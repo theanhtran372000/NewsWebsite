@@ -11,6 +11,20 @@ var multer = require('multer');
 const e = require('express');
 const { route } = require('express/lib/application');
 
+// Tạo chuỗi ngẫu nhiên gồm 6 ký tự
+function generateRandomString(){
+  return Array.from(Math.random().toString(16)).splice(3, 6).join("")
+}
+
+// Hiển thị số 2 ký tự
+function formatDateString(dateString){
+  return ("0" + dateString).slice(-2)
+}
+
+function getSaveString(date){
+  return `${date.getFullYear()}_${formatDateString(date.getMonth() + 1)}_${formatDateString(date.getDate())}_${formatDateString(date.getHours())}_${formatDateString(date.getMinutes())}_${formatDateString(date.getSeconds())}_${generateRandomString()}.png` 
+}
+
 // lưu trữ file ảnh của admin
 var storageadmin = multer.diskStorage({
   destination: function(req, file, cb){
@@ -18,7 +32,7 @@ var storageadmin = multer.diskStorage({
   },  
   filename: function(req, file, cb){
     var date = new Date()
-    var datestring = `${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()}_${Math.floor(Math.random() * 100) + 1}.png` 
+    var datestring = getSaveString(date)
     cb(null, datestring)
   }
 })
@@ -30,7 +44,7 @@ var storagenews = multer.diskStorage({
   },  
   filename: function(req, file, cb){
     var date = new Date()
-    var datestring = `${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()}_${Math.floor(Math.random() * 100) + 1}.png` 
+    var datestring = getSaveString(date)
     cb(null, datestring)
   }
 })
