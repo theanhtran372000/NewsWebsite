@@ -289,6 +289,8 @@ function callloadnew() {
     if (this.readyState === 4 && this.status === 200) {
       const ress = JSON.parse(this.responseText)
       if (ress.status === 'success') {
+
+        // Update news
         var parentNews = document.getElementsByClassName('admin-management-right-modify-list')[0]
         parentNews.innerHTML = ''
         var x = ``;
@@ -314,6 +316,17 @@ function callloadnew() {
               </div>`
         })
         parentNews.innerHTML = x
+
+        // Update topic
+        const selectTag = document.querySelector('#category-add-item')
+        var str = ''
+
+        const topicList = ress.listTopic
+        topicList.forEach(function(topic){
+          str += `<option value='${topic.topicId}' >${topic.topicName}</option>`
+        })
+
+        selectTag.innerHTML = str
       
         // Cập nhật số lượng
         const numNews = ress.listnews.length

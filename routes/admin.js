@@ -204,7 +204,8 @@ router.get('/:id/home/checkadmin', function(req, res){
     })
 
   })
-// Thêm bài báo m
+
+// Thêm bài báo mới
   router.post('/:id/adnews', function(req, res){
     var conn = database.createConnection()
     uploadnews(req, res, function(err){
@@ -239,11 +240,11 @@ router.get('/:id/home/checkadmin', function(req, res){
               conn.end()
               })
             })
-          }
-          
+          }  
       }
     })
   })
+
 // Xóa bài báo
   router.delete('/delete/:id', function(req, res, next){
     var conn = database.createConnection()
@@ -259,6 +260,7 @@ router.get('/:id/home/checkadmin', function(req, res){
       conn.end()
     })
   })
+
 // Chỉnh sửa bài báo
   router.put('/editnews', function(req, res, next){
     var conn = database.createConnection()
@@ -280,26 +282,36 @@ router.get('/:id/home/checkadmin', function(req, res){
         })
       }
     })
-    // console.log(req)
   })
+
 // Load bài báo 
   router.get('/:id/loadnews', function(req, res){
     var conn = database.createConnection()
-    conn.query("select * from baibao where adminid = ? order by thoigian desc", [req.params.id], function(err,result){
+    conn.query("select * from baibao where adminid = ? order by thoigian desc; select * from chude", [req.params.id], function(err,result){
       if(err){
         res.send({
           status: "fail"
         })
       }
-      // console.log(result)
+
       var listnews = []
-      result.forEach(element =>{
+      result[0].forEach(element =>{
         listnews.push(element)
       })
-      // console.log(listnews)
+
+      const listTopic = []
+      result[1].forEach((topic) => {
+        listTopic.push({
+          topicId: topic.id,
+          topicName: topic.tenchude
+        })
+      })
+
+
       res.send({
         status : 'success',
-        listnews : listnews
+        listnews : listnews,
+        listTopic: listTopic
       })
     })
   })
