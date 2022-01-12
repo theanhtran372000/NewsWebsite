@@ -48,6 +48,10 @@ header{
     line-height: 20px;
 }
 
+.menu li > a:hover{
+    color: var(--theme-color-3);
+}
+
 .menu > li:hover .sub-menu{
     display: block;
 }

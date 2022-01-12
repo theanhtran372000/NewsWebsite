@@ -1,14 +1,17 @@
 {
-  "accessNumber": 2,
+  "accessNumber": 54,
   "DBInfo": {
-    "host": "localhost",
-    "user": "root",
+    "host": "171.245.22.193",
+    "user": "theanh",
     "password": "123456",
     "database": "news_website",
     "insecureAuth": true
   },
   "badwords": [
-    "fuck you",
-    "fuck"
+    "việt cộng",
+    "ba que",
+    "đầu đất",
+    "bê đê",
+    "ngu dốt"
   ]
 }
