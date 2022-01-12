@@ -1,10 +1,11 @@
 {
-  "accessNumber": 37,
+  "accessNumber": 2,
   "DBInfo": {
     "host": "localhost",
     "user": "root",
-    "password": "372000",
-    "database": "news_website"
+    "password": "123456",
+    "database": "news_website",
+    "insecureAuth": true
   },
   "badwords": [
     "fuck you",

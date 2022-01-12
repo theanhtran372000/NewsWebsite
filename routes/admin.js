@@ -107,7 +107,7 @@ router.get('/:id/home', function(req, res){
     //thông tin admin
     var admin = result[1][0]
     const date = new Date(admin.ngaybatdau)
-    var dateString = `${date.getFullYear()} - ${date.getMonth() + 1} - ${date.getDate()}`
+    var dateString = `${date.getDate()} - ${date.getMonth() + 1} - ${date.getFullYear()}`
     admin.ngaybatdau = dateString
 
     //list chủ đề

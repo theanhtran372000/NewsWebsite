@@ -34,7 +34,11 @@
         <h1>Tin tức mới nhất</h1>
         <div class="latest-news">
           <div class="latest-news-big-image">
+            <% if (latestNews.length > 0){ %>
             <img src="<%=latestNews[0].anh %>" alt="Ảnh to">
+            <% } else {%>
+              <img alt="Ảnh to">
+            <% } %>
           </div>
           <div class="latest-news-small-images">
           <% for(let i = 1; i < latestNews.length; i++) { %>
@@ -65,18 +69,28 @@
 
           <div class="latest-news-content">
             <div class="latest-news-content-box">
+              <% if (latestNews.length > 0){ %>
               <h1>
                 <%= latestNews[0].tieude %>
               </h1>
               <%  const content = latestNews[0].noidung.split(' ').splice(0, latestNewsMaxLength).join(' ') + ' ...' %>
               <p><%= content %></p>
-
+              <% } else { %>
+                <h1>
+                  Không có nội dung
+                </h1>
+                <p>
+                  Không có nội dung
+                </p>
+                <% } %>
               <!-- <p>
                 Nội dung bản tin hiện tại: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed tellus sagittis, elementum orci a, convallis dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque tristique felis nisi, quis convallis nisi pulvinar vehicula. Nam id vehicula ligula. Vivamus ut venenatis risus. Vivamus neque ex, pulvinar ut augue eget, dignissim ultrices tortor. Donec dictum nisl et semper eleifend. Pellentesque eleifend porttitor tellus quis accumsan. Aliquam blandit tincidunt ligula vel hendrerit. Maecenas elementum dolor egestas, semper nisi in, hendrerit mi. Duis a dui lorem. Maecenas a sem interdum, rhoncus ante id, consequat mauris. Ut aliquam ipsum lectus, sit amet eleifend nunc venenatis ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
               </p> -->
             </div>
             <div class="latest-news-content-more">
+              <% if (latestNews.length > 0){ %>
               <a href="<%= `/user/${userid}/news/${latestNews[0].id}` %>">Xem thêm <i class="fas fa-angle-double-right"></i></a>
+              <% } %>
             </div>
           </div>
         </div>    
