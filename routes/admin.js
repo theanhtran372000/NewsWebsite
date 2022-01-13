@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../database')
+const fs = require('fs')
 const editJsonFile = require("edit-json-file")
 const dirList = __dirname.replace(/\\/g, '/').split('/')
 const accessInfo = editJsonFile(`${dirList.splice(0, dirList.length - 1).join('/')}/config.json`)
@@ -246,18 +247,69 @@ router.get('/:id/home/checkadmin', function(req, res){
   })
 
 // Xóa bài báo
-  router.delete('/delete/:id', function(req, res, next){
+  router.delete('/delete/:id', function(req, res){
     var conn = database.createConnection()
-    conn.query('delete from baibao where id = ?', [req.params.id], function(err, result){
+    
+    // Xóa các comment liên quan và xóa ảnh trong server
+    conn.query('delete from comment where baibaoid = ?; select anh, chudeid from baibao where id = ?; select count(*) as soluong from baibao b1, baibao b2 where b1.id = ? and b1.chudeid = b2.chudeid and b1.id != b2.id;', [req.params.id, req.params.id, req.params.id], function(err, result){
       if(err){
+        console.log('Fail 1');
         res.send({
-          status: 'fail'
+          status: "fail"
         })
+        conn.end()
+        return
       }
-      res.send({
-        status : 'success'
+
+      // Xóa ảnh trong server
+      const anh = result[1][0].anh // đường dẫn ảnh trong server
+      const chudeid = result[1][0].chudeid // id chủ đề bài báo
+      const soluong = result[2][0].soluong // số lượng tin cùng chủ đề
+
+      console.log(anh, chudeid, soluong);
+
+      fs.unlink('.' + anh, function(err, data){
+        if(err){
+          console.log("Không xóa được ảnh", result[1][0].anh);
+          res.send({
+            status: "fail"
+          })
+          conn.end()
+          return
+        }
+
+        // xóa bài báo
+        conn.query('delete from baibao where id = ?', [req.params.id], function(err, result){
+          if(err){
+            console.log('Fail 3');
+            res.send({
+              status: 'fail'
+            })
+            conn.end()
+          }
+
+          // Đó là bài báo cuối cùng của chủ đề
+          if(soluong == 0){
+
+            // Xóa chủ đề
+            conn.query('delete from chude where id = ?', [chudeid], function(err, result){
+              if(err){
+                console.log('Fail 4');
+                res.send({
+                  status: 'fail'
+                })
+                conn.end()
+              }
+              else{
+                res.send({
+                  status: 'success'
+                })
+                conn.end()
+              }
+            })
+          }
+        })
       })
-      conn.end()
     })
   })
 

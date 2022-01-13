@@ -274,6 +274,9 @@ function deleteNews(element) {
       if (res.status === 'success') {
         callloadnew()
       }
+      else{
+        alert('Xóa thất bại!')
+      }
     }
   }
   xhttp.send()
