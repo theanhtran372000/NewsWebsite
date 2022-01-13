@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
   //xử lý thêm admin
   const buttonaddadmin = document.getElementById('button-addadmin')
   buttonaddadmin.addEventListener('click', function () {
+
+    // Nếu các trường dữ liệu không trống và password trùng
     if (hotenadminnew.value !== "" && usernameadminnew !== "" && passwordadminnew !== ""
       && repasswordadminnew !== "" && file.value !== "" && passwordadminnew.value === repasswordadminnew.value) {
       let fileavatar = file.files[0]
@@ -30,14 +32,21 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log(formData)
       console.log(window.location)
       var xhttp = new XMLHttpRequest()
-      xhttp.open('GET', `${window.location}/checkadmin?hoten=${hotenadminnew.value}&username=${usernameadminnew.value}`, true)
+      xhttp.open('GET', `${window.location}/checkadmin?username=${usernameadminnew.value}`, true)
       xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
+        if (this.readyState < 4) return
+
+        // Thành công
+        if (this.status === 200) {
           const res = JSON.parse(this.responseText)
-          console.log(res)
+          
+          // Không trùng tài khoản
           if (res.status === 'success') {
             uploadfile("admin", formData, xhttp)
-          } else {
+          } 
+          
+          // Trùng tài khoản
+          else {
             var textResult = document.getElementById('post-announcement-admin')
             textResult.innerHTML = "Đã tồn tại tài khoản như vậy!"
             textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
@@ -45,17 +54,26 @@ document.addEventListener('DOMContentLoaded', function () {
               textResult.setAttribute('style', 'display: none')
             }, 5000)
           }
-        } else {
+        } 
+        
+        // Thất bại
+        else {
+
           var textResult = document.getElementById('post-announcement-admin')
-          textResult.innerHTML = "Đã xảy ra lỗi mời nhập lại!"
+          textResult.innerHTML = "Không thể kết nối tới server!"
           textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
           setTimeout(() => {
             textResult.setAttribute('style', 'display: none')
           }, 5000)
         }
+
       }
+
       xhttp.send()
-    } else if (hotenadminnew.value !== "" && usernameadminnew !== "" && passwordadminnew !== ""
+    } 
+    
+    // Nhập sai định dạng
+    else if (hotenadminnew.value !== "" && usernameadminnew !== "" && passwordadminnew !== ""
       && repasswordadminnew !== "" && file.value !== "" && passwordadminnew.value !== repasswordadminnew.value) {
       
       var textResult = document.getElementById('post-announcement-admin')
@@ -68,13 +86,20 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
   function uploadfile(type, formData, xhttp) {
+    
+    // Upload thông tin
     if (type === "admin") {
+      
       xhttp.open('POST', '/admin/uploadfile', true);
       xhttp.onreadystatechange = function () {
+        
         if (this.readyState == 4 && this.status === 200) {
+          
           const res = JSON.parse(this.responseText)
+          
+          // Thêm thành công
           if (res.status === 'success') {
-            console.log(hotenadminnew.value)
+
             hotenadminnew.value = ''
             usernameadminnew.value = ''
             passwordadminnew.value = ''
@@ -82,12 +107,16 @@ document.addEventListener('DOMContentLoaded', function () {
             file.value = ""
             
             var textResult = document.getElementById('post-announcement-admin')
+
             textResult.innerHTML = "Thêm thành công!"
             textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
             setTimeout(() => {
               textResult.setAttribute('style', 'display: none')
             }, 5000)
-          } else {
+          } 
+          
+          // Thêm thất bại
+          else {
             var textResult = document.getElementById('post-announcement-admin')
             textResult.innerHTML = "Thêm thất bại, mời nhập lại!"
             textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
@@ -95,9 +124,12 @@ document.addEventListener('DOMContentLoaded', function () {
               textResult.setAttribute('style', 'display: none')
             }, 5000)
           }
-        } else {
+        } 
+        
+        // Lỗi server
+        else {
           var textResult = document.getElementById('post-announcement-admin')
-          textResult.innerHTML = "Đã xảy ra lỗi, mời nhập lại!"
+          textResult.innerHTML = "Upload lên server thất bại!"
           textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
           setTimeout(() => {
             textResult.setAttribute('style', 'display: none')
@@ -105,13 +137,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       };
       xhttp.send(formData)
-    } else {
+    } 
+    
+    // Upload bài báo mới
+    else {
       var link = window.location.pathname
       link = link.split('/home').join('')
       console.log(link)
       xhttp.open('POST', `${link}/adnews`, true)
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status === 200) {
+          console.log('Response: ', this.responseText)
+
           const res = JSON.parse(this.responseText)
           if (res.status === 'success') {
             
@@ -130,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(() => {
               textResult.setAttribute('style', 'display: none')
             }, 5000)
-
 
             callloadnew()
           }

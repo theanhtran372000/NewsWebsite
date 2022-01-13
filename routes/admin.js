@@ -4,9 +4,6 @@ var express = require('express');
 var router = express.Router();
 var database = require('../database')
 const fs = require('fs')
-const editJsonFile = require("edit-json-file")
-const dirList = __dirname.replace(/\\/g, '/').split('/')
-const accessInfo = editJsonFile(`${dirList.splice(0, dirList.length - 1).join('/')}/config.json`)
 
 var multer = require('multer');
 const e = require('express');
@@ -100,7 +97,14 @@ router.post('/login', function(req, res){
 })
 
 router.get('/:id/home', function(req, res){
+  // Tạo connection
   const conn = database.createConnection()
+
+  // Đọc file config
+  const editJsonFile = require("edit-json-file")
+  const dirList = __dirname.replace(/\\/g, '/').split('/')
+  const accessInfo = editJsonFile(`${dirList.splice(0, dirList.length - 1).join('/')}/config.json`)
+
   conn.query('SELECT * from chude; SELECT * from admin where id = ?; select * from baibao where adminid = ? order by thoigian desc ; select count(*) as count from user; select count(*) as count from baibao where adminid = ? ',[req.params.id, req.params.id, req.params.id], (err, result) => {
     if(err) throw err
 
@@ -133,7 +137,7 @@ router.get('/:id/home', function(req, res){
     // số bài báo của admin
     var countNews = result[4][0].count
 
-    console.log(news)
+    console.log(accessInfo.get('accessNumber'))
 
     res.render('admin', {
       username: admin.username,
@@ -152,7 +156,7 @@ router.get('/:id/home', function(req, res){
 router.get('/:id/home/checkadmin', function(req, res){
   console.log(req.query)
   var conn = database.createConnection()
-  conn.query('select * from admin where hoten = ? and username = ?',[req.query.hoten, req.query.username], function(err, result){
+  conn.query('select * from admin where username = ?',[req.query.username], function(err, result){
     if(err) throw err
     
     if(result.length > 0){
@@ -246,7 +250,7 @@ router.get('/:id/home/checkadmin', function(req, res){
     })
   })
 
-// Xóa bài báo
+  // Xóa bài báo
   router.delete('/delete/:id', function(req, res){
     var conn = database.createConnection()
     
