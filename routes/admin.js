@@ -211,7 +211,7 @@ router.get('/:id/home/checkadmin', function(req, res){
     var conn = database.createConnection()
     uploadnews(req, res, function(err){
       if(err){
-        res.send('err')
+        res.send({status: 'err'})
       }else{
         var pathfile = '/' + req.file.path.toString().replace(/\\/g, '/')
         var date = new Date()
