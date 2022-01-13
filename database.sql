@@ -10,7 +10,7 @@ CREATE TABLE admin (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
     hoten VARCHAR(50) NOT NULL,
-    avatar VARCHAR(50) NOT NULL,
+    avatar VARCHAR(100) NOT NULL,
     ngaybatdau DATETIME NOT NULL
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE baibao (
     adminid INT NOT NULL,
     tieude VARCHAR(1000) NOT NULL,
     noidung VARCHAR(5000) NOT NULL,
-    anh VARCHAR(50) NOT NULL,
+    anh VARCHAR(100) NOT NULL,
     nguongoc VARCHAR(50) NOT NULL,
     thoigian DATETIME NOT NULL,
     FOREIGN KEY (chudeid) REFERENCES chude(id),
