@@ -312,6 +312,12 @@ router.get('/:id/home/checkadmin', function(req, res){
               }
             })
           }
+          else{
+            res.send({
+              status: 'success'
+            })
+            conn.end()
+          }
         })
       })
     })

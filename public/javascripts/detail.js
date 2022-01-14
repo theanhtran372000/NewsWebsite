@@ -216,9 +216,12 @@ function showMore(){
 
                     const parent = document.querySelector(".news-detail-left-comment-list-items")
                     const listCmt = document.querySelectorAll(".news-detail-left-comment-item")
+                    const newLen = listCmt.length + 10
+                    
+                    parent.innerHTML = ''
 
                     // load tiếp 10 cmt
-                    for (let i = listCmt.length; i< Math.min(comments.length, listCmt.length+10); i++) {
+                    for (let i = 0; i< Math.min(comments.length, newLen); i++) {
 
                         var username = comments[i]['username']
                         var noidung = comments[i]['noidung']

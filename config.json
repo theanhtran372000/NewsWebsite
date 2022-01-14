@@ -1,8 +1,8 @@
 {
-  "accessNumber": 68,
+  "accessNumber": 119,
   "DBInfo": {
-    "host": "171.245.22.193",
-    "user": "theanh",
+    "host": "localhost",
+    "user": "root",
     "password": "123456",
     "database": "news_website",
     "insecureAuth": true

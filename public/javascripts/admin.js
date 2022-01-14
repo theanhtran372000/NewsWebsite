@@ -304,9 +304,10 @@ function deleteNews(element) {
   var xhttp = new XMLHttpRequest()
   xhttp.open('delete', `/admin/delete/${id}`, true)
   xhttp.onreadystatechange = function () {
+    console.log(this.readyState, this.status);
     if (this.readyState === 4 && this.status === 200) {
       const res = JSON.parse(this.responseText)
-      console.log(res)
+      console.log(res.status);
       if (res.status === 'success') {
         callloadnew()
       }
@@ -319,6 +320,7 @@ function deleteNews(element) {
 }
 
 function callloadnew() {
+  console.log('Loading ...');
   var link = window.location.pathname
   link = link.split('/home').join('')
   console.log(link)

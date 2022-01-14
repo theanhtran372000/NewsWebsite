@@ -11,7 +11,7 @@ var adminRouter = require('./routes/admin')
 
 // variables
 var app = express()
-var port = process.env.PORT || '3000'
+var port = process.env.PORT || '8888'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
