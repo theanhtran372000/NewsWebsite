@@ -1,11 +1,10 @@
 {
-  "accessNumber": 119,
+  "accessNumber": 207,
   "DBInfo": {
     "host": "localhost",
     "user": "root",
     "password": "123456",
-    "database": "news_website",
-    "insecureAuth": true
+    "database": "news_website"
   },
   "badwords": [
     "việt cộng",

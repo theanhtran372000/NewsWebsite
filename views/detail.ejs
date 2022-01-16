@@ -22,7 +22,9 @@
   </head>
   <body>
     <% include header %>
-
+    <% function formatTime(t){
+        return ('0' + t).slice(-2)
+    } %>
     <section class="news-detail-section">
         <div class="container">
             <div class="news-detail">
@@ -165,7 +167,7 @@
                                                 <!-- <p><%=comments[i].thoigian%></p> -->
                                                 <p>
                                                     <% const date = new Date(comments[i].thoigian) %>
-                                                    <%= `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` %>
+                                                    <%= `${formatTime(date.getHours())}:${formatTime(date.getMinutes())}:${formatTime(date.getSeconds())} ${formatTime(date.getDate())}-${formatTime(date.getMonth()+1)}-${formatTime(date.getFullYear())}` %>
                                                 </p>
                                             </div>
                                         </div>
@@ -198,7 +200,7 @@
                                         <p>Thời gian: 
                                             <span>
                                                 <% const date = new Date(item.thoigian) %>
-                                                <%= `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` %>
+                                                <%= `${formatTime(date.getDate())}-${formatTime(date.getMonth()+1)}-${formatTime(date.getFullYear())}` %>
                                             </span>
                                         </p>
                                     </a>

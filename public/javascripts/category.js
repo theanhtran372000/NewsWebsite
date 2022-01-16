@@ -82,7 +82,7 @@ function sendChangeDisplayRequest(sortType, numNews, pages){
         }
     }
 
-    const url = new URL('https://' + window.location.host + `/filterNews`)
+    const url = new URL(window.location.protocol + '//' + window.location.host + `/filterNews`)
     url.searchParams.append('categoryId', categoryId)
     url.searchParams.append('sortType', sortType)
     url.searchParams.append('numNews', numNews)

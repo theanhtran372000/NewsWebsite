@@ -165,7 +165,7 @@ function updateComment(baibaoid){
                     var noidung = comments[i]['noidung']
 
                     const date = new Date(comments[i]['thoigian'])
-                    const thoigian = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+                    const thoigian = getDateString(date)
 
 
                     var div = document.createElement("div")
@@ -195,6 +195,14 @@ function updateComment(baibaoid){
     xhttp.open("POST",  `/user/getAllCmt`, true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(`baibaoid=${baibaoid}`)
+}
+
+function formatDateTime(t){
+    return ('0' + t).slice(-2)
+}
+
+function getDateString(date){
+    return `${formatDateTime(date.getHours())}:${formatDateTime(date.getMinutes())}:${formatDateTime(date.getSeconds())} ${formatDateTime(date.getDate())}-${formatDateTime(date.getMonth()+1)}-${formatDateTime(date.getFullYear())}`
 }
 
 function showMore(){
@@ -227,7 +235,7 @@ function showMore(){
                         var noidung = comments[i]['noidung']
                         
                         const date = new Date(comments[i]['thoigian'])
-                        const thoigian = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+                        const thoigian = getDateString(date)
 
 
                         var div = document.createElement("div")
