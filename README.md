@@ -2,7 +2,7 @@
 ## Giới thiệu
 Đây là trang web tin tức tiếng Việt, nơi mọi người có thể tìm đọc những bản tin mới nhất từ nhiều chủ đề khác nhau.
 
-Bài tập lớn môn Công nghệ Web và dịch vụ trực tuyển do thầy Đào Trung Kiên hướng dẫn.
+Bài tập lớn của **Nhóm 17** môn Công nghệ Web và dịch vụ trực tuyển do thầy **Đào Trung Kiên** hướng dẫn.
 
 ## Các tính năng chính
 - Trang web có 2 level người dùng là admin và user
