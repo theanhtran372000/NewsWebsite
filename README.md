@@ -5,9 +5,7 @@
 Bài tập lớn môn Công nghệ Web và dịch vụ trực tuyển do thầy Đào Trung Kiên hướng dẫn.
 
 ## Các tính năng chính
-- Trang web có 2 level người dùng
-    - Admin
-    - User: có thể đọc báo, đánh giá và comment
+- Trang web có 2 level người dùng là admin và user
 - Trang web responsive với 2 mức 800 và 1200px
 - Trang web có header và footer chung cho các page
 - Giao diện đẹp, tổ chức mã nguồn rõ ràng, mạch lạc
