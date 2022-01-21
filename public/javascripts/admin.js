@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })
 
+  // Hàm upload file
   function uploadfile(type, formData, xhttp) {
     
     // Upload thông tin
@@ -188,7 +189,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('button-add-news').addEventListener('click', function () {
     console.log(contentNews)
     console.log(titleNews.value, categoryNews.value, fileNews.value, nguonNews.value)
+    // Điền đầy đủ thông tin
     if (titleNews.value !== '' && contentNews.value !== '' && fileNews.value !== '' && nguonNews.value !== '') {
+      // Không thêm chủ đề mới
       if (categoryNewOfNews.value === '') {
         var avatarNew = fileNews.files[0]
         var formData = new FormData()
@@ -200,7 +203,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var xhttp = new XMLHttpRequest()
         uploadfile('news', formData, xhttp)
-      } else {
+      }
+      // Thêm chủ đề mới 
+      else {
         var avatarNew = fileNews.files[0]
         var formData = new FormData()
         formData.append('file', avatarNew, avatarNew.name)
@@ -215,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     } else {
-      // alert('Thêm dữ liệu vào các trường tương ứng')
       var textResult = document.getElementById('post-announcement-news')
       textResult.innerHTML = "Thêm dữ liệu vào các trường tương ứng"
       textResult.setAttribute('style', 'color: red; font-size: 14px; margin-bottom: 12px; display: block; ')
@@ -235,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
 })
+
 // đồng ý chỉnh sửa bài báo
 function confirmeditnew(element) {
   var link = window.location.pathname
@@ -249,10 +254,11 @@ function confirmeditnew(element) {
   formData.append('id', id)
   formData.append('newtitle', newTitle)
   formData.append('newcontent', newContent)
+  // Chỉnh sửa với ảnh mới
   if (newavatar.value !== '') {
     formData.append('file', newavatar.files[0], newavatar.files[0].name)
   }
-
+  // Chỉnh sửa với ảnh cũ
   var xhttp = new XMLHttpRequest()
   xhttp.open('PUT', '/admin/editnews', true)
   xhttp.onreadystatechange = function () {
@@ -298,6 +304,7 @@ function modifyNews(element) {
         `
 }
 
+// Xóa bài báo
 function deleteNews(element) {
   console.log(element.parentNode.parentNode.parentNode.children[0].innerHTML)
   var id = element.parentNode.parentNode.parentNode.children[0].innerHTML
@@ -319,6 +326,8 @@ function deleteNews(element) {
   xhttp.send()
 }
 
+
+// Load lại dữ liệu khi có thay đổi
 function callloadnew() {
   console.log('Loading ...');
   var link = window.location.pathname

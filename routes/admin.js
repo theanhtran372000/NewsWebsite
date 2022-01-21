@@ -19,6 +19,7 @@ function formatDateString(dateString){
   return ("0" + dateString).slice(-2)
 }
 
+// Định nghĩa lại tên file
 function getSaveString(date){
   return `${date.getFullYear()}_${formatDateString(date.getMonth() + 1)}_${formatDateString(date.getDate())}_${formatDateString(date.getHours())}_${formatDateString(date.getMinutes())}_${formatDateString(date.getSeconds())}_${generateRandomString()}.png` 
 }
@@ -47,6 +48,7 @@ var storagenews = multer.diskStorage({
   }
 })
 
+// Filter file
 const fileFilter = (req, file, cb) => {
   if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
     cb(null, true)
@@ -54,7 +56,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, false)  
 }
 
-// khai báo thuộc tính
+// khai báo thuộc tính khi upload ảnh của admin
 var uploadadmin = multer({
   storage: storageadmin,
   limits: {
@@ -63,6 +65,7 @@ var uploadadmin = multer({
   fileFilter: fileFilter
 }).single('file')
 
+// khai báo thuộc tính khi upload ảnh của news
 var uploadnews = multer({
   storage: storagenews,
   limits: {
@@ -73,6 +76,7 @@ var uploadnews = multer({
 
 // Đăng nhập với quyền là admin
 router.post('/login', function(req, res){
+  // Tạo connection
   const conn = database.createConnection()
   var username = req.body.username
   var password = req.body.password
@@ -86,16 +90,20 @@ router.post('/login', function(req, res){
         status: 'Success',
         adminid: result[0].id
       })
-    }else{ 
+    }
+    // Đăng nhâp thất bại
+    else{ 
       res.send({
         status: 'Fail',
         message: 'Tài khoản hoặc mật khẩu không chính xác.'
       })
     }
   })
+  // Ngắt kết nối 
   conn.end()
 })
 
+// Lấy dữ liệu admin
 router.get('/:id/home', function(req, res){
   // Tạo connection
   const conn = database.createConnection()
@@ -150,11 +158,12 @@ router.get('/:id/home', function(req, res){
       countNews: countNews
     })
   })
+  // Ngắt kết nối
   conn.end()
 })
 
+// Check tài khoản 
 router.get('/:id/home/checkadmin', function(req, res){
-  console.log(req.query)
   var conn = database.createConnection()
   conn.query('select * from admin where username = ?',[req.query.username], function(err, result){
     if(err) throw err
@@ -171,14 +180,19 @@ router.get('/:id/home/checkadmin', function(req, res){
       })
     }
   })
+  conn.end()
 })
+
 // thêm người admin mới
   router.post('/uploadfile', function(req, res){
     var conn = database.createConnection()
     uploadadmin(req, res, function(err){
+      // Xảy ra lỗi
       if(err){
         res.send("err")
-      }else{
+      }
+      // upload thành công
+      else{
         var date = new Date()
         var datastring = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
         var pathfile = '/' + req.file.path.toString().replace(/\\/g, '/')
@@ -192,13 +206,16 @@ router.get('/:id/home/checkadmin', function(req, res){
               ngaybatdau : datastring
             }
             conn.query('insert into admin (username, password, hoten, avatar, ngaybatdau) values (?, ?, ?, ? , ? ) ', [adminnew.username, adminnew.password, adminnew.hoten, adminnew.avatar, adminnew.ngaybatdau], function(err, result){
+              // Thêm thất bại
               if(err){
                 console.log(err)
                 res.send({
                   status: 'fail'
                 })
                 conn.end()
-              }else{
+              }
+              // Thêm thành công
+              else{
                 res.send({
                   status: 'success'
                 })
@@ -214,16 +231,24 @@ router.get('/:id/home/checkadmin', function(req, res){
   router.post('/:id/adnews', function(req, res){
     var conn = database.createConnection()
     uploadnews(req, res, function(err){
+      //Xảy ra lỗi
       if(err){
         res.send({status: 'err'})
-      }else{
+      }
+      //Upload thành công
+      else{
+        // Định nghĩa lại path của file
         var pathfile = '/' + req.file.path.toString().replace(/\\/g, '/')
         var date = new Date()
         var datastring = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
         console.log("date : " + date )
         console.log(req.file)
+
+        // Xảy ra lỗi khi upfile
           if(err) throw err
           console.log(req.body.categorynew)
+        
+        // Thêm bài báo với chủ đề đã có
           if(req.body.categorynew === undefined){
             conn.query('insert into baibao ( tieude, noidung, anh, nguongoc, thoigian , adminid, chudeid ) values (?, ?, ?, ?,?, ?, ?)', [req.body.title, req.body.content, pathfile, req.body.nguon, datastring ,req.params.id, req.body.category ], function(err, result){
               if(err) throw err
@@ -233,7 +258,9 @@ router.get('/:id/home/checkadmin', function(req, res){
               })
               conn.end()
             })
-          }else{
+          }
+          // Thêm bài báo với chủ đề mới
+          else{
             conn.query('insert into chude ( tenchude ) values (?)', [req.body.categorynew], function(err, chude){
               if(err) throw err
               conn.query('insert into baibao ( tieude, noidung, anh, nguongoc, thoigian, adminid, chudeid ) values (?, ?, ?, ?,?, ?, ?)', [req.body.title, req.body.content, pathfile, req.body.nguon, datastring ,req.params.id, chude.insertId ], function(err, result){
@@ -256,6 +283,7 @@ router.get('/:id/home/checkadmin', function(req, res){
     
     // Xóa các comment liên quan và xóa ảnh trong server
     conn.query('delete from comment where baibaoid = ?; select anh, chudeid from baibao where id = ?; select count(*) as soluong from baibao b1, baibao b2 where b1.id = ? and b1.chudeid = b2.chudeid and b1.id != b2.id;', [req.params.id, req.params.id, req.params.id], function(err, result){
+      // Xóa lỗi
       if(err){
         console.log('Fail 1');
         res.send({
@@ -327,8 +355,11 @@ router.get('/:id/home/checkadmin', function(req, res){
   router.put('/editnews', function(req, res, next){
     var conn = database.createConnection()
     uploadnews(req, res, function(err){
+      // Xảy ra lỗi
       if(err) throw err
       console.log(req.body.newtitle, req.body.newcontent, req.file)
+      
+      //Chỉnh sửa bài viết với ảnh cũ
       if(req.file === undefined){
         conn.query('update baibao set tieude = ?, noidung = ? where id = ?', [req.body.newtitle, req.body.newcontent, req.body.id], function(err, result){
           if(err) throw err
@@ -336,7 +367,9 @@ router.get('/:id/home/checkadmin', function(req, res){
           res.send('success')
           conn.end()
         })
-      }else{
+      }
+      // Chỉnh sửa bài viết với ảnh mới
+      else{
         var pathfile = '/' + req.file.path.toString().replace(/\\/g, '/')
         conn.query('update baibao set tieude = ?, noidung = ?, anh = ? where id = ?', [req.body.newtitle, req.body.newcontent, pathfile, req.body.id], function(err, result){
           if(err) throw err
@@ -356,11 +389,13 @@ router.get('/:id/home/checkadmin', function(req, res){
         })
       }
 
+      // load dữ liệu các bài báo
       var listnews = []
       result[0].forEach(element =>{
         listnews.push(element)
       })
 
+      //load list chủ đề
       const listTopic = []
       result[1].forEach((topic) => {
         listTopic.push({

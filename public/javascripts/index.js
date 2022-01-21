@@ -65,6 +65,7 @@ function sendLoginRequest(username, password){
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(`username=${username}&password=${password}`)
 }
+
 // Hàm gửi POST request bằng AJAX vs đăng nhập bằng admin
 function sendPostRequestAdmin(username, password){
     var xhttp = new XMLHttpRequest()
@@ -72,12 +73,13 @@ function sendPostRequestAdmin(username, password){
         if(this.readyState === 4 && this.status === 200){
             const res = JSON.parse(this.responseText)
             // đăng nhập thành công
-            console.log(res)
             if(res['status'] == 'Success'){
                 console.log("success")
                 const adminid = res['adminid']
                 window.location = `admin/${adminid}/home`
-            }else{
+            }
+            //đăng nhập thất bại
+            else{
                 document.querySelector('.login-announcement').innerHTML = res['message']
             }
         }
