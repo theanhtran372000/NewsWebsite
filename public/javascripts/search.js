@@ -40,6 +40,7 @@ function nextPage(){
     }
 }
 
+// Gửi yêu cầu thay đổi giao diện
 function sendChangeDisplayRequest(sortType, numNews, pages){
     const xhttp = new XMLHttpRequest()
 
@@ -91,7 +92,7 @@ function sendChangeDisplayRequest(sortType, numNews, pages){
     xhttp.send()
 }
 
-// Hàm thay đổi hiển thị trang hiện tại
+// Hàm thay đổi dòng hiển thị trang hiện tại
 function setCurrentPage(page){
     const pageDisplay = document.querySelector('.categorical-news-items-bottom p')
     
@@ -116,6 +117,7 @@ function setCurrentPage(page){
     `
 }
 
+// Hàm đổi trang
 function changePage(page){
     const currentPage = + page.innerHTML
     const currentSortType = document.querySelector('.categorical-news-items-title-sort-time select').value

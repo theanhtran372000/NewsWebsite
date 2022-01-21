@@ -50,10 +50,6 @@ CREATE TABLE comment (
     FOREIGN KEY (userid) REFERENCES user(id)
 );
 
--- Thêm dữ liệu ban đầu
-INSERT INTO admin(id, username, password, hoten, avatar, ngaybatdau) VALUES (1, 'admin', 'admin', 'Root', '/public/upload/admin/avatar.png', '2022-1-1');
-INSERT INTO user(id, username, password) VALUES (1, 'guest', 'guest');
-
 -- Thay đổi tài khoản root -- Có thể thay đổi user và password tương ứng
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
 FLUSH PRIVILEGES;

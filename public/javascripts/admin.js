@@ -271,10 +271,12 @@ function confirmeditnew(element) {
   xhttp.send(formData)
 
 }
+
 // hủy không thay đổi bài báo nữa
 function canceleditnews() {
   callloadnew()
 }
+
 // hàm khi thay bấm nút chỉnh sửa bài báo
 function modifyNews(element) {
   const id = element.parentNode.parentNode.parentNode.children[0].innerHTML
@@ -325,7 +327,6 @@ function deleteNews(element) {
   }
   xhttp.send()
 }
-
 
 // Load lại dữ liệu khi có thay đổi
 function callloadnew() {

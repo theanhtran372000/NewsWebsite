@@ -42,6 +42,11 @@ function login(){
     }
 }
 
+// Hàm đăng nhập dành cho khách
+function guestLogin(){
+    sendLoginRequest("guest", "guest")
+}
+
 // Hàm gửi POST request bằng AJAX
 function sendLoginRequest(username, password){
     var xhttp = new XMLHttpRequest()

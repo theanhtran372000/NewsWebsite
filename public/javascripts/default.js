@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function(){
     window.onresize = resizeHandler
 }, false);
 
+// Tìm kiếm tin theo từ khóa
 function searchNews(){
     const input = document.querySelector('.others input').value
 
