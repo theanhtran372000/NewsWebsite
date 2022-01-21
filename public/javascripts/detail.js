@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 s.classList.add('far')
             })
 
-            // chọn lại
+            // chọn lại sao
             for(let i = 0; i <= index; i++){
                 stars[i].classList.remove('far')
                 stars[i].classList.add('fas')
@@ -31,19 +31,21 @@ document.addEventListener('DOMContentLoaded', function(){
         })
     })
 
-    // set account option
+    // Đặt lại các lựa chọn username
     if (window.location.pathname.split('/')[2]=="1"){
+        // Nếu đăng nhập tài khoản khách thì bỏ lựa chọn username
         document.querySelectorAll('#name option')[0].remove()
     }
     else {
-        // bỏ dòng cần đăng nhập
+        // nếu đăng nhập tài khoản không phải khách thì bỏ dòng cần đăng nhập
         document.querySelector(".news-detail-left-comment-input-button p").innerHTML = ""
     }
 
-    //set rate value star
+    // Đặt thông số các giá trị rate sao
     setRateValue()
 })
 
+// Hàm thay đổi số sao đánh giá
 function starResizing(){
     if(window.innerWidth <= 800){
         const stars = document.querySelectorAll('.news-detail-left-comment-input-top-comment-box-rate i.fa-star')
@@ -59,6 +61,7 @@ function starResizing(){
     }
 }
 
+// hàm thêm comment mới
 function addComment(){
     // lấy input
     var name = document.querySelector('.news-detail-left-comment-input-top-comment-box-name select').value
@@ -76,17 +79,16 @@ function addComment(){
         userid = "1"
     }
 
-    // check email va comment
+    // kiểm tra email va comment
     if (!checkCmt(email.value, comment.value)){
         console.log("không cho comment")
         return
     }
 
-    
+    // Nếu nút bình luận được ấn
     if (!btnAddCmt){
         // Gửi thông tin tới server
         var xhttp = new XMLHttpRequest()
-
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 const res = JSON.parse(this.responseText)
@@ -115,14 +117,15 @@ function addComment(){
     }
 }
 
+// Cập nhật các comment khi thêm mới comment
 function updateComment(baibaoid){
-    // Gửi thông tin tới server
+    // gửi POST request tới server bằng AJAX
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             const res = JSON.parse(this.responseText)
 
-            //thành công
+            // thành công
             if(res['status'] == 'Success'){
                 comments = res['comments']
 
@@ -197,19 +200,25 @@ function updateComment(baibaoid){
     xhttp.send(`baibaoid=${baibaoid}`)
 }
 
+// định dạnh số hiển thị của thời gian
 function formatDateTime(t){
     return ('0' + t).slice(-2)
 }
 
+
+// hàm chuyển từ định dạng DATETIME sang chuỗi định dạng thời gian HH:MM:SS DD-MM-YYYY
 function getDateString(date){
     return `${formatDateTime(date.getHours())}:${formatDateTime(date.getMinutes())}:${formatDateTime(date.getSeconds())} ${formatDateTime(date.getDate())}-${formatDateTime(date.getMonth()+1)}-${formatDateTime(date.getFullYear())}`
 }
 
+// Hàm tải thêm các comment
 function showMore(){
     // lấy id bai bao
     const baibaoid = window.location.pathname.split('/')[4]
 
     const btnShowMore = document.querySelector(".news-detail-left-comment-more a").checked
+
+    // Sự kiện ấn nút Thêm bình luận
     if (!btnShowMore){
         // Gửi thông tin tới server
         var xhttp = new XMLHttpRequest()
@@ -218,7 +227,7 @@ function showMore(){
             if(this.readyState == 4 && this.status == 200){
                 const res = JSON.parse(this.responseText)
 
-                // Đăng nhập thành công
+                // Xử lý thành công
                 if(res['status'] == 'Success'){
                     comments = res['comments']
 
@@ -270,7 +279,7 @@ function showMore(){
     
 }
 
-
+// Hàm đặt lại giá trị số sao trung bình và các thanh rate
 function setRateValue(){
     var rate = [0,0,0,0,0]  //số lượng rate từ 5->1 sao
     var count = 0
@@ -284,7 +293,7 @@ function setRateValue(){
 
     rateSlide = document.querySelectorAll(".rate-value")
     if (!count){
-        // truong hop khong co rate nao
+        // trường hợp chưa có đánh giá sao nào
         document.getElementById('avarage').innerHTML = 0
         document.getElementById('countCmt').innerHTML = 0
 
@@ -293,7 +302,7 @@ function setRateValue(){
         })
     }
     else {
-        // Thay đổi giá trị trung bình và số rate
+        // Thay đổi giá trị trung bình và số sao rate
         document.getElementById('avarage').innerHTML = (sum/count).toFixed(2)
         document.getElementById('countCmt').innerHTML = count
 
@@ -304,7 +313,7 @@ function setRateValue(){
 
 }
 
-
+// Hàm kiểm tra email và nội dung bình luận
 function checkCmt(email, noidung){
     // check có dữ liệu ko
     if (email.length==0 || noidung.length==0){ 

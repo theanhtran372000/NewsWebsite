@@ -208,9 +208,9 @@ router.get('/:uid/search', function(req, res){
 
 // --------------------- Nguyễn Quang Hưng --------------------------------- //
 
-// Page News Detail
+// Trang thông tin chi tiết
 router.get('/:uid/news/:newsid', function(req, res) {
-  // Tạo kết nối db
+  // Tạo kết nối database
   const conn = database.createConnection()
 
   var userid = req.params.uid
@@ -221,13 +221,13 @@ router.get('/:uid/news/:newsid', function(req, res) {
   queryList.push('SELECT * from chude') // Lấy dữ liệu header
   queryList.push(`SELECT id, username FROM user WHERE id = ${userid}`) // Lấy username
   queryList.push(`SELECT * FROM baibao WHERE id = ${newsid}`) // Lấy bài báo theo id
-  queryList.push(`SELECT admin.hoten FROM admin, baibao WHERE admin.id=baibao.adminid AND baibao.id=${newsid}`)
-  queryList.push(`SELECT b2.* FROM baibao b1, baibao b2 WHERE b1.id=${newsid} AND b1.chudeid=b2.chudeid AND b1.id != b2.id ORDER BY thoigian DESC LIMIT 10`)
-  queryList.push(`SELECT u.username, c.noidung, c.rate, c.thoigian FROM user u, comment c WHERE c.baibaoid=${newsid} AND c.userid=u.id ORDER BY c.thoigian DESC`)
+  queryList.push(`SELECT admin.hoten FROM admin, baibao WHERE admin.id=baibao.adminid AND baibao.id=${newsid}`) // lấy Họ tên người đăng bài
+  queryList.push(`SELECT b2.* FROM baibao b1, baibao b2 WHERE b1.id=${newsid} AND b1.chudeid=b2.chudeid AND b1.id != b2.id ORDER BY thoigian DESC LIMIT 10`) // Lấy danh sách 10 bài báo cùng chủ đề
+  queryList.push(`SELECT u.username, c.noidung, c.rate, c.thoigian FROM user u, comment c WHERE c.baibaoid=${newsid} AND c.userid=u.id ORDER BY c.thoigian DESC`) //Lấy danh sách comment
   conn.query(queryList.join('; '), (err, results) => {
     if(err) throw err
 
-    // lấy topic
+    // lấy danh sách topic
     const topics = []
     results[0].forEach(function(item){
       topics.push({
@@ -244,10 +244,10 @@ router.get('/:uid/news/:newsid', function(req, res) {
     // lấy bài viết
     const news = results[2][0]
 
-    // lấy tác giả
+    // lấy tác giả của bài viết
     author = results[3][0].hoten
 
-    // lấy bài viết liên quan
+    // lấy danh sách các bài viết liên quan, cùng chủ đề
     relatedNews = results[4]
 
     // lấy comments
@@ -265,6 +265,8 @@ router.get('/:uid/news/:newsid', function(req, res) {
 
     })
 
+    
+    /* Render trang thông tin chi tiết với các dữ liệu: user id, username, danh sách topic, thông tin bản tin, các tin liên quan, tác giả, phần sao đáng giá, và các comment. */
     res.render('detail', {
       userid: userid,
       username: username,
@@ -280,8 +282,13 @@ router.get('/:uid/news/:newsid', function(req, res) {
   conn.end()
 });
 
+
+/**
+ * Kiểm tra bình luận có chứa những từ ngữ tiêu cực không.
+ * @param noidung - nhận xét mà người dùng đã nhập 
+ * @returns Hàm đang trả về một giá trị boolean là true nếu bình luận không có từ tiêu cực, false nếu vi phạm
+ */
 function checkCmt(noidung){
-  // check cmt
   lowerWord = noidung.toLowerCase()
   const wordCheck = badWords
   for (var i=0; i<wordCheck.length; i++){
@@ -293,7 +300,10 @@ function checkCmt(noidung){
   return true
 }
 
-// api add comment
+/**
+ * api add comment
+ * Kiểm tra nếu bình luận có hợp lệ không. Nếu bình luận hợp lệ, thêm bình luận vào database 
+ *  */ 
 router.post('/addComment', function(req, res){
 
   var noidung = req.body.noidung
@@ -305,6 +315,7 @@ router.post('/addComment', function(req, res){
   var date = new Date()
   var thoigian = date.getFullYear() + "-" + date.getMonth()+1 + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
 
+  // Kiểm tra nếu bình luận có hợp lệ không 
   var isValid = checkCmt(noidung)
   if(! isValid){
     res.send({
@@ -316,7 +327,7 @@ router.post('/addComment', function(req, res){
     // Tạo kết nối db
     const conn = database.createConnection()
 
-    // chen comment moi
+    // Thêm comment mới vào database
     conn.query(`INSERT INTO comment(baibaoid, userid, noidung, rate, email, thoigian) VALUES (?, ?, ?, ?, ?, ?);`, [baibaoid, userid, noidung, rate, email, thoigian], function(err, result){
       if(err) throw err
       
@@ -329,12 +340,14 @@ router.post('/addComment', function(req, res){
   } 
 })
 
-// api add comment
+// Api lấy toàn bộ comment của bài báo
 router.post('/getAllCmt', function(req, res){
   baibaoid = req.body.baibaoid
 
-  // Tạo kết nối db
+  // Tạo kết nối database
   const conn = database.createConnection()
+
+  // Thực hiện truy vấn lấy toàn bộ comment theo id của bài báo
   conn.query(`SELECT u.username, c.noidung, c.rate, c.thoigian FROM user u, comment c WHERE c.baibaoid=${baibaoid} AND c.userid=u.id ORDER BY c.thoigian DESC`, function(err, result){
     if(err) throw err
 
